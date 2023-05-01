@@ -20,6 +20,7 @@ namespace GraduationProject.Controllers
         [HttpGet]
         public List<User> Get()
         {
+            var xx = "";
             return (this._DbContext.Users.ToList());
         }
         public class AddUserViewModel
