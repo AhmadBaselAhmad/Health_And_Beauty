@@ -17,5 +17,9 @@ namespace GraduationProject.DataBase.Models
         public int DoctorId { get; set; }
         [ForeignKey("DoctorId")]
         public User? Doctor { get; set; }
+        
+        public int ServiceId { get; set; }
+        [ForeignKey("ServiceId")]
+        public Models.Service? Service { get; set; }
     }
 }

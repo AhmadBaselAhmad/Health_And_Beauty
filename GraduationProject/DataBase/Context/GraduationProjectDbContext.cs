@@ -9,6 +9,7 @@ namespace GraduationProject.DataBase.Context
     {
         public DbSet<Admin> Admins { get; set; }
         public DbSet<Appointment> Appointments { get; set; }
+        public DbSet<Allergy> Allergies { get; set; }
         public DbSet<Attribute_View_Management> Attributes_View_Management { get; set; }
         public DbSet<Clinic> Clinics { get; set; }
         public DbSet<Data_Type> Data_Types { get; set; }
