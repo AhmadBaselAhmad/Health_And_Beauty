@@ -5,7 +5,7 @@ namespace GraduationProject.DataBase.Models
 {
     public class Dependency: TimeStampModel
     {
-        [Key]
+
         public int Id { get; set; }
 
         public int DynamicAttributeId { get; set; }

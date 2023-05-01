@@ -6,7 +6,7 @@ namespace GraduationProject.DataBase.Models
 {
     public class Dynamic_Attribute_Value : TimeStampModel
     {
-        [Key]
+
         public int Id { get; set; }
         public string? ValueString { get; set; }
         public double? ValueDouble { get; set; }

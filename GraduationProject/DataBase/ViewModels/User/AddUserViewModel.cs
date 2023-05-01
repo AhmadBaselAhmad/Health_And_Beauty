@@ -1,10 +1,7 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace GraduationProject.DataBase.Models
+﻿namespace GraduationProject.DataBase.ViewModels.User
 {
-    public class User: TimeStampModel
+    public class AddUserViewModel
     {
-        public int Id { get; set; }
         public string Name { get; set; }
         public string First_Name { get; set; }
         public string Last_Name { get; set; }
@@ -12,6 +9,5 @@ namespace GraduationProject.DataBase.Models
         public string Telephone_Number { get; set; }
         public string Email { get; set; }
         public string Password { get; set; }
-        public DateTime? Blocked_Date { get; set; }
     }
 }

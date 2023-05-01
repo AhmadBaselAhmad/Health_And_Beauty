@@ -5,7 +5,7 @@ namespace GraduationProject.DataBase.Models
 {
     public class Data_Type: TimeStampModel
     {
-        [Key]
+
         public int Id { get; set; }
         public string Name { get; set; }
     }

@@ -6,7 +6,7 @@ namespace GraduationProject.DataBase.Models
 {
     public class Row_Rule : TimeStampModel
     {
-        [Key]
+
         public int Id { get; set; }
 
         public int RowId { get; set; }

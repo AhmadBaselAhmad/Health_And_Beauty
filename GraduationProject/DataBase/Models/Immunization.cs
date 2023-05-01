@@ -5,7 +5,7 @@ namespace GraduationProject.DataBase.Models
 {
     public class Immunization : TimeStampModel
     {
-        [Key]
+
         public int Id { get; set; }
 
         public int MedicalInfoId { get; set; }

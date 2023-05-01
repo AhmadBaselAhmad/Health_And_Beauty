@@ -5,7 +5,7 @@ namespace GraduationProject.DataBase.Models
 {
     public class Rule : TimeStampModel
     {
-        [Key]
+
         public int Id { get; set; }
 
         public int? StaticAttributeId { get; set; }

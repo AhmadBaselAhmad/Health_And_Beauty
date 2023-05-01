@@ -5,7 +5,7 @@ namespace GraduationProject.DataBase.Models
 {
     public class Static_Attribute: TimeStampModel
     {
-        [Key]
+
         public int Id { get; set; }
         public string Key { get; set; }
         public string Label { get; set; }

@@ -5,7 +5,7 @@ namespace GraduationProject.DataBase.Models
 {
     public class Secretary_Working_Hour : TimeStampModel
     {
-        [Key]
+
         public int Id { get; set; }
 
         public int SecretaryId { get; set; }

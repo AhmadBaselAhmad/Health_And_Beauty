@@ -33,7 +33,7 @@ namespace GraduationProject.DataBase.Context
         public DbSet<Rule> Rules { get; set; }
         public DbSet<Secretary> Secretaries { get; set; }
         public DbSet<Secretary_Working_Hour> Secretary_Working_Hours { get; set; }
-        // public DbSet<Service> Services { get; set; }
+        public DbSet<Models.Service> Services { get; set; }
         public DbSet<Static_Attribute> Static_Attributes { get; set; }
         public DbSet<Surgery> Surgeries { get; set; }
         public DbSet<User> Users { get; set; }
@@ -41,6 +41,41 @@ namespace GraduationProject.DataBase.Context
         public DbSet<Working_Day> Working_Days { get; set; }
 
         public GraduationProjectDbContext(DbContextOptions<GraduationProjectDbContext> options) : base(options) { }
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Admin>().HasQueryFilter(s => !s.IsDeleted);
+            modelBuilder.Entity<Appointment>().HasQueryFilter(s => !s.IsDeleted);
+            modelBuilder.Entity<Attribute_View_Management>().HasQueryFilter(s => !s.IsDeleted);
+            modelBuilder.Entity<Clinic>().HasQueryFilter(s => !s.IsDeleted);
+            modelBuilder.Entity<Data_Type>().HasQueryFilter(s => !s.IsDeleted);
+            modelBuilder.Entity<Dependency>().HasQueryFilter(s => !s.IsDeleted);
+            modelBuilder.Entity<Dependency_Row>().HasQueryFilter(s => !s.IsDeleted);
+            modelBuilder.Entity<Doctor>().HasQueryFilter(s => !s.IsDeleted);
+            modelBuilder.Entity<Doctor_Working_Hour>().HasQueryFilter(s => !s.IsDeleted);
+            modelBuilder.Entity<Dynamic_Attribute>().HasQueryFilter(s => !s.IsDeleted);
+            modelBuilder.Entity<Dynamic_Attribute_Value>().HasQueryFilter(s => !s.IsDeleted);
+            modelBuilder.Entity<History>().HasQueryFilter(s => !s.IsDeleted);
+            modelBuilder.Entity<Image>().HasQueryFilter(s => !s.IsDeleted);
+            modelBuilder.Entity<Immunization>().HasQueryFilter(s => !s.IsDeleted);
+            modelBuilder.Entity<Medical_Information>().HasQueryFilter(s => !s.IsDeleted);
+            modelBuilder.Entity<Medicine>().HasQueryFilter(s => !s.IsDeleted);
+            modelBuilder.Entity<Notification>().HasQueryFilter(s => !s.IsDeleted);
+            modelBuilder.Entity<Operation>().HasQueryFilter(s => !s.IsDeleted);
+            modelBuilder.Entity<Password_Reset>().HasQueryFilter(s => !s.IsDeleted);
+            modelBuilder.Entity<Patient>().HasQueryFilter(s => !s.IsDeleted);
+            modelBuilder.Entity<Prescription>().HasQueryFilter(s => !s.IsDeleted);
+            modelBuilder.Entity<Row>().HasQueryFilter(s => !s.IsDeleted);
+            modelBuilder.Entity<Row_Rule>().HasQueryFilter(s => !s.IsDeleted);
+            modelBuilder.Entity<Rule>().HasQueryFilter(s => !s.IsDeleted);
+            modelBuilder.Entity<Secretary>().HasQueryFilter(s => !s.IsDeleted);
+            modelBuilder.Entity<Secretary_Working_Hour>().HasQueryFilter(s => !s.IsDeleted);
+            modelBuilder.Entity<Models.Service>().HasQueryFilter(s => !s.IsDeleted);
+            modelBuilder.Entity<Static_Attribute>().HasQueryFilter(s => !s.IsDeleted);
+            modelBuilder.Entity<Surgery>().HasQueryFilter(s => !s.IsDeleted);
+            modelBuilder.Entity<User>().HasQueryFilter(s => !s.IsDeleted);
+            modelBuilder.Entity<Validation>().HasQueryFilter(s => !s.IsDeleted);
+            modelBuilder.Entity<Working_Day>().HasQueryFilter(s => !s.IsDeleted);
+        }
         public override int SaveChanges()
         {
             var entries = ChangeTracker

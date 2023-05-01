@@ -5,7 +5,7 @@ namespace GraduationProject.DataBase.Models
 {
     public class Secretary : TimeStampModel
     {
-        [Key]
+
         public int Id { get; set; }
 
         public int ClinicId { get; set; }
