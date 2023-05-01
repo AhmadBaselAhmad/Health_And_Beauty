@@ -21,6 +21,7 @@ namespace GraduationProject.Controllers
         public List<User> Get()
         {
             var xx = "";
+            var xxs = "";
             return (this._DbContext.Users.ToList());
         }
         public class AddUserViewModel
