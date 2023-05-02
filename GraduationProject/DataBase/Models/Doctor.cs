@@ -5,7 +5,6 @@ namespace GraduationProject.DataBase.Models
 {
     public class Doctor: TimeStampModel
     {
-
         public int Id { get; set; }
         public string Degree { get; set; }
         public string AboutMe { get; set; }

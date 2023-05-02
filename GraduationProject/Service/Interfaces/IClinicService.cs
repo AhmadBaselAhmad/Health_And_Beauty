@@ -2,8 +2,8 @@
 
 namespace GraduationProject.Service.Interfaces
 {
-    public interface IAdminService
+    public interface IClinicService
     {
-        ApiResponse ChangeCurrentAdmin(int DoctorId);
+        ApiResponse GetAllClinics(ComplexFilter Filter);
     }
 }

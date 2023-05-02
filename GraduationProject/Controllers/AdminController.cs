@@ -1,4 +1,5 @@
 ﻿using GraduationProject.DataBase.Context;
+using GraduationProject.DataBase.Helpers;
 using GraduationProject.Service.Interfaces;
 using GraduationProject.Service.Services;
 using Microsoft.AspNetCore.Http;
@@ -19,11 +20,12 @@ namespace GraduationProject.Controllers
         [HttpPost("ChangeCurrentAdmin")]
         public IActionResult ChangeCurrentAdmin(int DoctorId)
         {
-            _AdminService.ChangeCurrentAdmin(DoctorId);
+            ApiResponse Response = _AdminService.ChangeCurrentAdmin(DoctorId);
+
+            if (!string.IsNullOrEmpty(Response.ErrorMessage) ? Response.ErrorMessage != "Succeed" : false)
+                return BadRequest(Response);
+
             return Ok();
         }
-
-        // [HttpGet("GetAllDoctorsWithoutCurrentAdmin")]
-
     }
 }

@@ -20,6 +20,40 @@ namespace GraduationProject.Controllers
         public IActionResult AddNewDoctor(AddDoctorViewModel NewDoctor)
         {
             ApiResponse? Response = _DoctorService.AddNewDoctor(NewDoctor);
+
+            if (!string.IsNullOrEmpty(Response.ErrorMessage) ? Response.ErrorMessage != "Succeed" : false)
+                return BadRequest(Response);
+
+            return Ok(Response);
+        }
+        [HttpPost("GetAllDoctors")]
+        public IActionResult GetAllDoctors(ComplexFilter Filter)
+        {
+            ApiResponse? Response = _DoctorService.GetAllDoctors(Filter);
+
+            if (!string.IsNullOrEmpty(Response.ErrorMessage) ? Response.ErrorMessage != "Succeed" : false)
+                return BadRequest(Response);
+
+            return Ok(Response);
+        }
+        [HttpPut("EditDoctor")]
+        public IActionResult EditDoctor(EditDoctorViewModel DoctorNewData)
+        {
+            ApiResponse? Response = _DoctorService.EditDoctor(DoctorNewData);
+
+            if (!string.IsNullOrEmpty(Response.ErrorMessage) ? Response.ErrorMessage != "Succeed" : false)
+                return BadRequest(Response);
+
+            return Ok(Response);
+        }
+        [HttpGet("GetDoctorById")]
+        public IActionResult GetDoctorById(int DoctorId)
+        {
+            ApiResponse? Response = _DoctorService.GetDoctorById(DoctorId);
+
+            if (!string.IsNullOrEmpty(Response.ErrorMessage) ? Response.ErrorMessage != "Succeed" : false)
+                return BadRequest(Response);
+
             return Ok(Response);
         }
     }

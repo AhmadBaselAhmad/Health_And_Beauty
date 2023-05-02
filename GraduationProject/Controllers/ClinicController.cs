@@ -1,5 +1,4 @@
 ﻿using GraduationProject.DataBase.Helpers;
-using GraduationProject.DataBase.ViewModels.Authenticate;
 using GraduationProject.Service.Interfaces;
 using GraduationProject.Service.Services;
 using Microsoft.AspNetCore.Http;
@@ -9,17 +8,17 @@ namespace GraduationProject.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class LoginController : ControllerBase
+    public class ClinicController : ControllerBase
     {
-        private ILoginService _LoginService;
-        public LoginController(ILoginService LoginService)
+        private IClinicService _ClinicService;
+        public ClinicController(IClinicService ClinicService)
         {
-            _LoginService = LoginService;
+            _ClinicService = ClinicService;
         }
-        [HttpPost("CreateToken")]
-        public IActionResult CreateToken(LoginViewModel Login)
+        [HttpPost("GetAllClinics")]
+        public IActionResult GetAllClinics(ComplexFilter Filter)
         {
-            ApiResponse? Response = _LoginService.CreateToken(Login);
+            ApiResponse Response = _ClinicService.GetAllClinics(Filter);
 
             if (!string.IsNullOrEmpty(Response.ErrorMessage) ? Response.ErrorMessage != "Succeed" : false)
                 return BadRequest(Response);

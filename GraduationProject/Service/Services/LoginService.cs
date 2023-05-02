@@ -64,7 +64,7 @@ namespace GraduationProject.Service.Services
 
             string TokenString = new JwtSecurityTokenHandler().WriteToken(TokenDetails);
 
-            return new ApiResponse(TokenString, string.Empty);
+            return new ApiResponse(TokenString, "Succeed");
         }
     }
 }

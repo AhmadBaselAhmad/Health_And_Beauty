@@ -1,4 +1,5 @@
 ﻿using GraduationProject.DataBase.Context;
+using GraduationProject.DataBase.Helpers;
 using GraduationProject.DataBase.Models;
 using GraduationProject.DataBase.ViewModels.Doctor;
 using GraduationProject.Service.Interfaces;
@@ -12,22 +13,23 @@ namespace GraduationProject.Service.Services
         {
             _DbContext = DbContext;
         }
-        public void ChangeCurrentAdmin(int DoctorId)
+        public ApiResponse ChangeCurrentAdmin(int AdminId)
         {
-            Admin CurrentAdmin = _DbContext.Admins.FirstOrDefault(x => !x.IsDeleted);
+            Admin? CurrentAdmin = _DbContext.Admins.FirstOrDefault(x => !x.IsDeleted);
+
+            if (CurrentAdmin == null)
+                return new ApiResponse(false, $"No Admin Found With This Id: {AdminId}");
 
             CurrentAdmin.IsDeleted = true;
 
             Admin NewAdmin = new Admin
             {
-                DoctorId = DoctorId
+                DoctorId = AdminId
             };
             _DbContext.Admins.Add(NewAdmin);
             _DbContext.SaveChanges();
+
+            return new ApiResponse(true, "Succeed");
         }
-        //public List<DoctorViewModel> GetAllDoctorsWithoutCurrentAdmin()
-        //{
-        //    var NotAdminDoctors = _DbContext.Doctors.Where(x => !x.IsDeleted)
-        //}
     }
 }
