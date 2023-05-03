@@ -22,6 +22,7 @@ builder.Services.AddDbContext<GraduationProjectDbContext>(options =>
 builder.Services.AddScoped<ILoginService, LoginService>();
 builder.Services.AddScoped<IDoctorService, DoctorService>();
 builder.Services.AddScoped<IClinicService, ClinicService>();
+builder.Services.AddScoped<IDynamic_AttributeService, Dynamic_AttributeService>();
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>

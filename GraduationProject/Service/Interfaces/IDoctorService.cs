@@ -9,5 +9,6 @@ namespace GraduationProject.Service.Interfaces
         ApiResponse GetAllDoctors(ComplexFilter Filter);
         ApiResponse EditDoctor(EditDoctorViewModel DoctorNewData);
         ApiResponse GetDoctorById(int DoctorId);
+        ApiResponse DeleteDoctor(int DoctorId);
     }
 }

@@ -15,12 +15,10 @@ namespace GraduationProject.Service.Services
     public class DoctorService : IDoctorService
     {
         private GraduationProjectDbContext _DbContext;
-        private IConfiguration _Config;
         private readonly IMapper _Mapper;
-        public DoctorService(GraduationProjectDbContext DbContext, IConfiguration Config, IMapper Mapper)
+        public DoctorService(GraduationProjectDbContext DbContext, IMapper Mapper)
         {
             _DbContext = DbContext;
-            _Config = Config;
             _Mapper = Mapper;
         }
         public ApiResponse AddNewDoctor(AddDoctorViewModel NewDoctor)
@@ -84,7 +82,7 @@ namespace GraduationProject.Service.Services
 
             if (!string.IsNullOrEmpty(Filter.Sort))
             {
-                PropertyInfo? SortProperty = typeof(Clinic).GetProperty(Filter.Sort);
+                PropertyInfo? SortProperty = typeof(DoctorViewModel).GetProperty(Filter.Sort);
 
                 if (SortProperty != null && Filter.Order == "asc")
                     Doctors = Doctors.OrderBy(x => SortProperty.GetValue(x)).ToList();
@@ -145,6 +143,18 @@ namespace GraduationProject.Service.Services
             }
 
             _DbContext.SaveChanges();
+            return new ApiResponse(true, "Succeed");
+        }
+        public ApiResponse DeleteDoctor(int DoctorId)
+        {
+            Doctor? Doctor = _DbContext.Doctors.FirstOrDefault(x => x.Id == DoctorId);
+
+            if (Doctor == null)
+                return new ApiResponse(false, $"No Doctor Found With This Id: {DoctorId}");
+
+            Doctor.IsDeleted = true;
+            _DbContext.SaveChanges();
+
             return new ApiResponse(true, "Succeed");
         }
     }

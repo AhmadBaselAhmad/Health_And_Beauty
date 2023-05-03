@@ -56,5 +56,15 @@ namespace GraduationProject.Controllers
 
             return Ok(Response);
         }
+        [HttpPut("DeleteDoctor")]
+        public IActionResult DeleteDoctor(int DoctorId)
+        {
+            ApiResponse? Response = _DoctorService.DeleteDoctor(DoctorId);
+
+            if (!string.IsNullOrEmpty(Response.ErrorMessage) ? Response.ErrorMessage != "Succeed" : false)
+                return BadRequest(Response);
+
+            return Ok(Response);
+        }
     }
 }
