@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace GraduationProject.DataBase.Models
 {
-    public class Dynamic_Attribute: TimeStampModel
+    public class Dynamic_Attribute : TimeStampModel
     {
 
         public int Id { get; set; }

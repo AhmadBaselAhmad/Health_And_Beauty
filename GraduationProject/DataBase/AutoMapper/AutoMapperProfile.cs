@@ -19,6 +19,7 @@ namespace GraduationProject.DataBase.AutoMapper
                 .ForMember(c => c.Doctor_Name, c => c.MapFrom(s => s.User.Name));
             CreateMap<Doctor, EditDoctorViewModel>().ReverseMap();
 
+            CreateMap<AddDependencyInstViewModel, Dynamic_AttributeViewModel>().ReverseMap();
             CreateMap<Dynamic_Attribute, Dynamic_AttributeViewModel>()
                 .ForMember(c => c.Clinic_Name, c => c.MapFrom(s => s.Clinic.Name))
                 .ForMember(c => c.DataType_Name, c => c.MapFrom(s => s.DataType.Name));
