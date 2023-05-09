@@ -11,7 +11,6 @@ namespace GraduationProject.Controllers
     [ApiController]
     public class AdminController : ControllerBase
     {
-        int xx = 0;
         private IAdminService _AdminService;
         public AdminController(AdminService AdminService)
         {
