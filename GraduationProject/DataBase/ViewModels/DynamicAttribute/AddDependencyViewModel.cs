@@ -18,6 +18,9 @@
 
         // After Selecting Dependency and User Want to Select New Result (Another DefaultValue)...
         public string? StringResult { get; set; }
+        public double? DoubleResult { get; set; }
+        public DateTime? DateTimeResult { get; set; }
+        public bool? BooleanResult { get; set; }
 
         public List<ValidationViewModel>? Validations { get; set; }
         public List<DependencyViewModel>? Dependencies { get; set; }

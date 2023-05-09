@@ -1,15 +1,6 @@
 {
   "profiles": {
-    "GraduationProject": {
-      "commandName": "Project",
-      "launchBrowser": true,
-      "launchUrl": "swagger",
-      "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
-      },
-      "dotnetRunMessages": true,
-      "applicationUrl": "https://localhost:7242;http://localhost:5242"
-    },
+
     "IIS Express": {
       "commandName": "IISExpress",
       "launchBrowser": true,
@@ -23,6 +14,10 @@
   "iisSettings": {
     "windowsAuthentication": false,
     "anonymousAuthentication": true,
+    "iis": {
+      "applicationUrl": "http://localhost:53174",
+      "sslPort": 0
+    },
     "iisExpress": {
       "applicationUrl": "http://localhost:53174",
       "sslPort": 0
