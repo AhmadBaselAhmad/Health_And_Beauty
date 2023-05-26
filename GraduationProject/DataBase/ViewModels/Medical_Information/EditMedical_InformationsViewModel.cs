@@ -1,16 +1,8 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-
-namespace GraduationProject.DataBase.Models
+﻿namespace GraduationProject.DataBase.ViewModels.Medical_Information
 {
-    public class Medical_Information : TimeStampModel
+    public class EditMedical_InformationsViewModel
     {
-        public int Id { get; set; }
-
         public int PatientId { get; set; }
-        [ForeignKey("PatientId")]
-        public User? Patient { get; set; }
-
         public string Height { get; set; }
         public string BGroup { get; set; }
         public string Pulse { get; set; }

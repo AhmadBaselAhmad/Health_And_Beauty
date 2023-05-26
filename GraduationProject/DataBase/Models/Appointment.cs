@@ -12,11 +12,11 @@ namespace GraduationProject.DataBase.Models
 
         public int PatientId { get; set; }
         [ForeignKey("PatientId")]
-        public User? Patient { get; set; }
+        public Patient? Patient { get; set; }
 
         public int DoctorId { get; set; }
         [ForeignKey("DoctorId")]
-        public User? Doctor { get; set; }
+        public Doctor? Doctor { get; set; }
         
         public int ServiceId { get; set; }
         [ForeignKey("ServiceId")]

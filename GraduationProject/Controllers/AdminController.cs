@@ -12,7 +12,7 @@ namespace GraduationProject.Controllers
     public class AdminController : ControllerBase
     {
         private IAdminService _AdminService;
-        public AdminController(AdminService AdminService)
+        public AdminController(IAdminService AdminService)
         {
             _AdminService = AdminService;
         }
