@@ -35,5 +35,25 @@ namespace GraduationProject.Controllers
 
             return Ok(Response);
         }
+        [HttpGet("GetAllOperations")]
+        public IActionResult GetAllOperations()
+        {
+            ApiResponse? Response = _Dynamic_AttributeService.GetAllOperations();
+
+            if (!string.IsNullOrEmpty(Response.ErrorMessage) ? Response.ErrorMessage != "Succeed" : false)
+                return BadRequest(Response);
+
+            return Ok(Response);
+        }
+        [HttpGet("GetAllDataTypes")]
+        public IActionResult GetAllDataTypes()
+        {
+            ApiResponse? Response = _Dynamic_AttributeService.GetAllDataTypes();
+
+            if (!string.IsNullOrEmpty(Response.ErrorMessage) ? Response.ErrorMessage != "Succeed" : false)
+                return BadRequest(Response);
+
+            return Ok(Response);
+        }
     }
 }

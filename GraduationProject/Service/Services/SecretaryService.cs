@@ -116,10 +116,8 @@ namespace GraduationProject.Service.Services
         }
         public ApiResponse GetAllSecretaries(int ClinicId, ComplexFilter Filter)
         {
-            // If Secretary.IsDeleted == false --> This Secretary is Now Active in This Clinic..
-            // Else --> This Secretary Was Working in This Clinic..
-
             List<SecretaryViewModel> Secretaries = _Mapper.Map<List<SecretaryViewModel>>(_DbContext.Secretaries
+                .Include(x => x.User).Include(x => x.Clinic)
                 .Where(x => x.ClinicId == ClinicId).ToList());
 
             int Count = Secretaries.Count();

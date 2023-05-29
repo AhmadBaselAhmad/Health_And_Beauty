@@ -68,6 +68,7 @@ namespace GraduationProject.DataBase.Context
             modelBuilder.Entity<Row>().HasQueryFilter(s => !s.IsDeleted);
             modelBuilder.Entity<Row_Rule>().HasQueryFilter(s => !s.IsDeleted);
             modelBuilder.Entity<Rule>().HasQueryFilter(s => !s.IsDeleted);
+            modelBuilder.Entity<Secretary>().HasQueryFilter(s => !s.IsDeleted);
             modelBuilder.Entity<Secretary_Working_Hour>().HasQueryFilter(s => !s.IsDeleted);
             modelBuilder.Entity<Models.Service>().HasQueryFilter(s => !s.IsDeleted);
             modelBuilder.Entity<Static_Attribute>().HasQueryFilter(s => !s.IsDeleted);

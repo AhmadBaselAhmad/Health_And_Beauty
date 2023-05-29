@@ -6,5 +6,7 @@ namespace GraduationProject.Service.Interfaces
     {
         ApiResponse GetDynamicAttributeById(int Dynamic_AttributeId);
         ApiResponse GetAllDynamicAttributes(ComplexFilter Filter, bool? OnlyHealthStandards);
+        ApiResponse GetAllOperations();
+        ApiResponse GetAllDataTypes();
     }
 }

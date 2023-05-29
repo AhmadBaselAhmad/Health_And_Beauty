@@ -5,7 +5,6 @@ namespace GraduationProject.DataBase.Models
 {
     public class Attribute_View_Management: TimeStampModel
     {
-
         public int Id { get; set; }
         public bool Enable { get; set; }
 

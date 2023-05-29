@@ -994,5 +994,15 @@ namespace GraduationProject.Service.Services
         //        throw;
         //    }
         //}
+        public ApiResponse GetAllDataTypes()
+        {
+            List<Data_Type> Data_Types = _DbContext.Data_Types.ToList();
+            return new ApiResponse(Data_Types, "Succeed");
+        }
+        public ApiResponse GetAllOperations()
+        {
+            List<Operation> Operations = _DbContext.Operations.ToList();
+            return new ApiResponse(Operations, "Succeed");
+        }
     }
 }

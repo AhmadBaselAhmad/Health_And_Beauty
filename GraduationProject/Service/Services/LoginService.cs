@@ -4,6 +4,7 @@ using GraduationProject.DataBase.Models;
 using GraduationProject.DataBase.ViewModels.Authenticate;
 using GraduationProject.Service.Interfaces;
 using Microsoft.AspNetCore.Cryptography.KeyDerivation;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -47,17 +48,46 @@ namespace GraduationProject.Service.Services
             if (!Verified)
                 return new ApiResponse(false, "Invalid Password");
 
+            string Role = string.Empty;
+            bool CheckRole = _DbContext.Secretaries.Any(x => x.UserId == User.Id);
+
+            if (CheckRole)
+                Role = Constants.Roles.Secretary.ToString();
+
+            else
+            {
+                Admin? SuperAdmin = _DbContext.Admins
+                    .Include(x => x.Doctor)
+                    .FirstOrDefault(x => x.Doctor.UserId == User.Id);
+                
+                if (SuperAdmin != null)
+                    Role = Constants.Roles.SuperAdmin.ToString();
+
+                if (SuperAdmin == null)
+                {
+                    Doctor? Doctor = _DbContext.Doctors
+                        .FirstOrDefault(x => x.UserId == User.Id);
+
+                    if (Doctor != null ? Doctor.IsHeadOfClinic : false)
+                        Role = Constants.Roles.ClinicAdmin.ToString();
+
+                    else
+                        Role = Constants.Roles.Doctor.ToString();
+                }
+            }
+
             List<Claim> Claims = new List<Claim> {
                 new Claim(JwtRegisteredClaimNames.Sub, User.Id.ToString()),
                 new Claim(JwtRegisteredClaimNames.FamilyName, User.Last_Name),
-                new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
+                new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+                new Claim(JwtRegisteredClaimNames.Typ, Role)
             };
 
             SymmetricSecurityKey Key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_Config["JWT:Key"]));
             SigningCredentials Credentials = new SigningCredentials(Key, SecurityAlgorithms.HmacSha256);
 
-            JwtSecurityToken TokenDetails = new JwtSecurityToken("https://localhost:44311/",
-              "https://localhost:44311/",
+            JwtSecurityToken TokenDetails = new JwtSecurityToken("http://localhost:53174/",
+              "http://localhost:53174/",
               Claims,
               expires: DateTime.Now.AddMinutes(30),
               signingCredentials: Credentials);

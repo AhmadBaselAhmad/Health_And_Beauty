@@ -1,0 +1,16 @@
+﻿
+For Srhan:
+{
+	Seed Data:
+	{
+		1. Operation (<, <=, >, >=, =, !=)
+		2. Data Types (Text, Date, Number, Flag (Boolean))
+		3. Clinics
+	}
+}
+
+For Aya AlJandale:
+{
+	1. We Need To Set The Patients Grid as (Dynamic Grid).. Because If We Don't Then There is no Need For The Attribute_View_Management Section and 
+		its Services.
+}
