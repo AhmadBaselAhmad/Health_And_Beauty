@@ -19,6 +19,8 @@ builder.Services.AddDbContext<GraduationProjectDbContext>(options =>
     options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString));
 });
 
+builder.Services.AddHttpContextAccessor();
+
 builder.Services.AddScoped<ILoginService, LoginService>();
 builder.Services.AddScoped<IDoctorService, DoctorService>();
 builder.Services.AddScoped<IClinicService, ClinicService>();

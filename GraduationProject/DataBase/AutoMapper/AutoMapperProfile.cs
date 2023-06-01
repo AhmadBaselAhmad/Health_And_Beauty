@@ -46,7 +46,7 @@ namespace GraduationProject.DataBase.AutoMapper
             // Secretary..
             CreateMap<Secretary, SecretaryViewModel>()
                 .ForMember(c => c.User_Name, c => c.MapFrom(s => s.User.Name))
-                .ForMember(c => c.Clinic_Name, c => c.MapFrom(s => s.Clinic.Name)).ReverseMap();
+                .ForMember(c => c.Clinic_Name, c => c.MapFrom(s => s.Clinic.Name));
             CreateMap<Secretary, AddSecreataryViewModel>().ReverseMap();
 
             // Clinic..

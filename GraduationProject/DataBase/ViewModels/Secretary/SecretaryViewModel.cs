@@ -11,7 +11,5 @@ namespace GraduationProject.DataBase.ViewModels.Secretary
 
         public int UserId { get; set; }
         public string User_Name { get; set; }
-
-        public bool IsDeleted { get; set; }
     }
 }
