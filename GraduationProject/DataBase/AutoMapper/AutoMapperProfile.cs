@@ -7,6 +7,7 @@ using GraduationProject.DataBase.ViewModels.Medical_Information;
 using GraduationProject.DataBase.ViewModels.Patient;
 using GraduationProject.DataBase.ViewModels.Secretary;
 using GraduationProject.DataBase.ViewModels.User;
+using GraduationProject.DataBase.ViewModels.Working_Days;
 
 namespace GraduationProject.DataBase.AutoMapper
 {
@@ -51,6 +52,9 @@ namespace GraduationProject.DataBase.AutoMapper
 
             // Clinic..
             CreateMap<Clinic, ClinicViewModel>().ReverseMap();
+
+            // Working_Days..
+            CreateMap<Working_Day, Working_DaysViewModel>().ReverseMap();
 
         }
     }
