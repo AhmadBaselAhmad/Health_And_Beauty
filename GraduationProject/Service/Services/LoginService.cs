@@ -49,20 +49,25 @@ namespace GraduationProject.Service.Services
                 return new ApiResponse(false, "Invalid Password");
 
             string Role = string.Empty;
-            bool CheckRole = _DbContext.Secretaries.Any(x => x.UserId == User.Id);
+            int ClinicId = 0;
+            Secretary? CheckSecretaryRole = _DbContext.Secretaries.FirstOrDefault(x => x.UserId == User.Id);
 
-            if (CheckRole)
+            if (CheckSecretaryRole != null)
+            {
                 Role = Constants.Roles.Secretary.ToString();
-
+                ClinicId = CheckSecretaryRole.ClinicId;
+            }
             else
             {
                 Admin? SuperAdmin = _DbContext.Admins
                     .Include(x => x.Doctor)
                     .FirstOrDefault(x => x.Doctor.UserId == User.Id);
-                
-                if (SuperAdmin != null)
-                    Role = Constants.Roles.SuperAdmin.ToString();
 
+                if (SuperAdmin != null)
+                {
+                    Role = Constants.Roles.SuperAdmin.ToString();
+                    ClinicId = SuperAdmin.Doctor.ClinicId;
+                }
                 if (SuperAdmin == null)
                 {
                     Doctor? Doctor = _DbContext.Doctors
@@ -73,6 +78,8 @@ namespace GraduationProject.Service.Services
 
                     else
                         Role = Constants.Roles.Doctor.ToString();
+
+                    ClinicId = Doctor.ClinicId;
                 }
             }
 
@@ -80,7 +87,8 @@ namespace GraduationProject.Service.Services
                 new Claim(JwtRegisteredClaimNames.Sub, User.Id.ToString()),
                 new Claim(JwtRegisteredClaimNames.FamilyName, User.Last_Name),
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-                new Claim(JwtRegisteredClaimNames.Typ, Role)
+                new Claim(JwtRegisteredClaimNames.Typ, Role),
+                new Claim(JwtRegisteredClaimNames.Iss, ClinicId.ToString())
             };
 
             SymmetricSecurityKey Key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_Config["JWT:Key"]));
