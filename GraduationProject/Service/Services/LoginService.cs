@@ -84,11 +84,11 @@ namespace GraduationProject.Service.Services
             }
 
             List<Claim> Claims = new List<Claim> {
-                new Claim(JwtRegisteredClaimNames.Sub, User.Id.ToString()),
-                new Claim(JwtRegisteredClaimNames.FamilyName, User.Last_Name),
-                new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-                new Claim(JwtRegisteredClaimNames.Typ, Role),
-                new Claim(JwtRegisteredClaimNames.Iss, ClinicId.ToString())
+                new Claim("UserId", User.Id.ToString()),
+                new Claim("Last_Name", User.Last_Name),
+                new Claim("RandomGuid", Guid.NewGuid().ToString()),
+                new Claim("Role", Role),
+                new Claim("ClinicId", ClinicId.ToString())
             };
 
             SymmetricSecurityKey Key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_Config["JWT:Key"]));
