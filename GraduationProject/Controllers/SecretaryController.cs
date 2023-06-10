@@ -46,7 +46,7 @@ namespace GraduationProject.Controllers
 
             return Ok(Response);
         }
-        [HttpPut("EditClinicSecretary")]
+        [HttpPatch("EditClinicSecretary")]
         public IActionResult EditClinicSecretary(int SecretaryId, int NewClinicId)
         {
             ApiResponse? Response = _SecretaryService.EditClinicSecretary(SecretaryId, NewClinicId);

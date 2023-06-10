@@ -24,7 +24,7 @@ namespace GraduationProject.Controllers
 
             return Ok(Response);
         }
-        [HttpGet("UpdateAttributeStatus")]
+        [HttpPut("UpdateAttributeStatus")]
         public IActionResult UpdateAttributeStatus(int AttributeViewManagementId)
         {
             ApiResponse Response = _AttributeViewManagement.UpdateAttributeStatus(AttributeViewManagementId);

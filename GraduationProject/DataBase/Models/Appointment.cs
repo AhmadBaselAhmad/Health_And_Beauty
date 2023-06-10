@@ -2,13 +2,9 @@
 
 namespace GraduationProject.DataBase.Models
 {
-    public class Appointment: TimeStampModel
+    public class Appointment : TimeStampModel
     {
         public int Id { get; set; }
-        public DateOnly Date { get; set; }
-        public TimeOnly Time { get; set; }
-        public string Status { get; set; }
-        public bool Notified { get; set; }
 
         public int PatientId { get; set; }
         [ForeignKey("PatientId")]
@@ -17,9 +13,18 @@ namespace GraduationProject.DataBase.Models
         public int DoctorId { get; set; }
         [ForeignKey("DoctorId")]
         public Doctor? Doctor { get; set; }
-        
+
         public int ServiceId { get; set; }
         [ForeignKey("ServiceId")]
         public Models.Service? Service { get; set; }
+
+        public DateOnly Date { get; set; }
+        public TimeOnly Time { get; set; }
+        public string Status { get; set; }
+        public bool Notified { get; set; }
+
+
+
+
     }
 }

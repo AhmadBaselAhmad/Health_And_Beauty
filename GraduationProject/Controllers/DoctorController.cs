@@ -27,7 +27,7 @@ namespace GraduationProject.Controllers
 
             if (!string.IsNullOrEmpty(Response.ErrorMessage) ? Response.ErrorMessage != "Succeed" : false)
                 return BadRequest(Response);
-            
+
             return Ok(Response);
         }
         [HttpPost("GetAllDoctors")]
@@ -40,7 +40,7 @@ namespace GraduationProject.Controllers
 
             return Ok(Response);
         }
-        [HttpPut("EditDoctor")]
+        [HttpPatch("EditDoctor")]
         public IActionResult EditDoctor(EditDoctorViewModel DoctorNewData)
         {
             ApiResponse? Response = _DoctorService.EditDoctor(DoctorNewData);

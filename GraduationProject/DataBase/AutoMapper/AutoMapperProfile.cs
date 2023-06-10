@@ -6,6 +6,7 @@ using GraduationProject.DataBase.ViewModels.DynamicAttribute;
 using GraduationProject.DataBase.ViewModels.Medical_Information;
 using GraduationProject.DataBase.ViewModels.Patient;
 using GraduationProject.DataBase.ViewModels.Secretary;
+using GraduationProject.DataBase.ViewModels.Service;
 using GraduationProject.DataBase.ViewModels.User;
 using GraduationProject.DataBase.ViewModels.Working_Days;
 
@@ -67,6 +68,9 @@ namespace GraduationProject.DataBase.AutoMapper
             // Working_Days..
             CreateMap<Working_Day, Working_DaysViewModel>().ReverseMap();
 
+            CreateMap<Models.Service, ServiceViewModel>()
+                .ForMember(c => c.Clinic_Name, c => c.MapFrom(f => f.Clinic.Name));
+            CreateMap<Models.Service, AddClinicServiceViewModel>().ReverseMap();
         }
     }
 }

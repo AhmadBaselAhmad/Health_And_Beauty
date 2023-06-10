@@ -19,10 +19,6 @@ namespace GraduationProject.DataBase.Models
 
         public bool Disable { get; set; }
 
-        public int ClinicId { get; set; }
-        [ForeignKey("ClinicId")]
-        public Clinic? Clinic { get; set; }
-
         public int PatientId { get; set; }
         [ForeignKey("PatientId")]
         public Patient? Patient { get; set; }

@@ -17,7 +17,7 @@ namespace GraduationProject.Controllers
             _AdminService = AdminService;
         }
 
-        [HttpPost("ChangeCurrentAdmin")]
+        [HttpPut("ChangeCurrentAdmin")]
         public IActionResult ChangeCurrentAdmin(int DoctorId)
         {
             ApiResponse Response = _AdminService.ChangeCurrentAdmin(DoctorId);

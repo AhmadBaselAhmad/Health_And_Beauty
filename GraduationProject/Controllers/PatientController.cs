@@ -29,7 +29,7 @@ namespace GraduationProject.Controllers
 
             return Ok(Response);
         }
-        [HttpPost("EditPatientMedicalInfo")]
+        [HttpPatch("EditPatientMedicalInfo")]
         public IActionResult EditPatientMedicalInfo(EditMedical_InformationsViewModel PatientMedicalInformationViewModel)
         {
             ApiResponse? Response = _PatientService.EditPatientMedicalInfo(PatientMedicalInformationViewModel);
