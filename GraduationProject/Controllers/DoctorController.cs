@@ -4,6 +4,8 @@ using GraduationProject.DataBase.ViewModels.Doctor;
 using GraduationProject.Service.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
 
 namespace GraduationProject.Controllers
 {
@@ -12,9 +14,11 @@ namespace GraduationProject.Controllers
     public class DoctorController : ControllerBase
     {
         private IDoctorService _DoctorService;
-        public DoctorController(IDoctorService DoctorService)
+        private readonly IHttpContextAccessor _HttpContextAccessor;
+        public DoctorController(IDoctorService DoctorService, IHttpContextAccessor HttpContextAccessor)
         {
             _DoctorService = DoctorService;
+            _HttpContextAccessor = HttpContextAccessor;
         }
         [HttpPost("AddNewDoctor")]
         public IActionResult AddNewDoctor(AddDoctorViewModel NewDoctor)
@@ -27,9 +31,9 @@ namespace GraduationProject.Controllers
             return Ok(Response);
         }
         [HttpPost("GetAllDoctors")]
-        public IActionResult GetAllDoctors(ComplexFilter Filter)
+        public IActionResult GetAllDoctors(ComplexFilter Filter, int? ClinicId)
         {
-            ApiResponse? Response = _DoctorService.GetAllDoctors(Filter);
+            ApiResponse? Response = _DoctorService.GetAllDoctors(Filter, ClinicId);
 
             if (!string.IsNullOrEmpty(Response.ErrorMessage) ? Response.ErrorMessage != "Succeed" : false)
                 return BadRequest(Response);

@@ -72,11 +72,13 @@ namespace GraduationProject.Service.Services
                 return new ApiResponse(true, "Succeed");
             }
         }
-        public ApiResponse GetAllDoctors(ComplexFilter Filter)
+        public ApiResponse GetAllDoctors(ComplexFilter Filter, int? ClinicId)
         {
             List<DoctorViewModel> Doctors = _Mapper.Map<List<DoctorViewModel>>(_DbContext.Doctors
                 .Include(x => x.User).Include(x => x.Clinic)
-                .Where(x => !string.IsNullOrEmpty(Filter.SearchQuery) ? x.User.Name.ToLower().StartsWith(Filter.SearchQuery) : true).ToList());
+                .Where(x => (!string.IsNullOrEmpty(Filter.SearchQuery) ?
+                    x.User.Name.ToLower().StartsWith(Filter.SearchQuery) : true) &&
+                    (ClinicId != null ? x.ClinicId == ClinicId.Value : true)).ToList());
 
             int Count = Doctors.Count();
 
