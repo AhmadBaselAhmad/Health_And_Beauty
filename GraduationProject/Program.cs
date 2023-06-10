@@ -26,6 +26,7 @@ builder.Services.AddScoped<IDynamic_AttributeService, Dynamic_AttributeService>(
 builder.Services.AddScoped<IPatientService, PatientService>();
 builder.Services.AddScoped<ISecretaryService, SecretaryService>();
 builder.Services.AddScoped<IAttributeViewManagement, AttributeViewManagement>();
+builder.Services.AddScoped<IClinicService, ClinicService>();
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>

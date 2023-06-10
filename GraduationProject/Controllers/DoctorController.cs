@@ -23,7 +23,7 @@ namespace GraduationProject.Controllers
 
             if (!string.IsNullOrEmpty(Response.ErrorMessage) ? Response.ErrorMessage != "Succeed" : false)
                 return BadRequest(Response);
-
+            
             return Ok(Response);
         }
         [HttpPost("GetAllDoctors")]
