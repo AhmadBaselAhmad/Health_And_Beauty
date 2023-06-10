@@ -19,6 +19,8 @@ builder.Services.AddDbContext<GraduationProjectDbContext>(options =>
     options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString));
 });
 
+builder.Services.AddHttpContextAccessor();
+
 builder.Services.AddScoped<ILoginService, LoginService>();
 builder.Services.AddScoped<IDoctorService, DoctorService>();
 builder.Services.AddScoped<IClinicService, ClinicService>();
@@ -27,6 +29,7 @@ builder.Services.AddScoped<IPatientService, PatientService>();
 builder.Services.AddScoped<ISecretaryService, SecretaryService>();
 builder.Services.AddScoped<IAttributeViewManagement, AttributeViewManagement>();
 builder.Services.AddScoped<IClinicService, ClinicService>();
+builder.Services.AddScoped<IWorking_DaysService, Working_DaysService>();
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>

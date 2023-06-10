@@ -7,6 +7,7 @@ using GraduationProject.DataBase.ViewModels.Medical_Information;
 using GraduationProject.DataBase.ViewModels.Patient;
 using GraduationProject.DataBase.ViewModels.Secretary;
 using GraduationProject.DataBase.ViewModels.User;
+using GraduationProject.DataBase.ViewModels.Working_Days;
 
 namespace GraduationProject.DataBase.AutoMapper
 {
@@ -22,7 +23,9 @@ namespace GraduationProject.DataBase.AutoMapper
             CreateMap<Doctor, AddDoctorViewModel>().ReverseMap();
             CreateMap<Doctor, DoctorViewModel>()
                 .ForMember(c => c.Clinic_Name, c => c.MapFrom(s => s.Clinic.Name))
-                .ForMember(c => c.Doctor_Name, c => c.MapFrom(s => s.User.Name));
+                .ForMember(c => c.Doctor_Name, c => c.MapFrom(s => s.User.Name))
+                .ForMember(c => c.First_Name, c => c.MapFrom(s => s.User.First_Name))
+                .ForMember(c => c.Last_Name, c => c.MapFrom(s => s.User.Last_Name));
             CreateMap<Doctor, EditDoctorViewModel>().ReverseMap();
 
             // Dynamic Attribute..
@@ -36,16 +39,34 @@ namespace GraduationProject.DataBase.AutoMapper
                 .ForMember(c => c.Patient_Name, c => c.MapFrom(s => s.Patient.Name));
             CreateMap<Medical_Information, AddMedical_InformationsViewModel>().ReverseMap();
             CreateMap<Medical_Information, EditMedical_InformationsViewModel>().ReverseMap();
-            
+
             // Patient..
             CreateMap<Patient, PatientViewModel>()
                 .ForMember(c => c.UserInformation, c => c.MapFrom(s => s.User)).ReverseMap();
 
             // Secretary..
             CreateMap<Secretary, SecretaryViewModel>()
+                .ForMember(c => c.Clinic_Name, c => c.MapFrom(s => s.Clinic.Name))
                 .ForMember(c => c.User_Name, c => c.MapFrom(s => s.User.Name))
-                .ForMember(c => c.Clinic_Name, c => c.MapFrom(s => s.Clinic.Name)).ReverseMap();
+                .ForMember(c => c.First_Name, c => c.MapFrom(s => s.User.First_Name))
+                .ForMember(c => c.Last_Name, c => c.MapFrom(s => s.User.Last_Name))
+                .ForMember(c => c.Phone_Number, c => c.MapFrom(s => s.User.Phone_Number));
+            CreateMap<Secretary, AllSecretaryDataViewModel>()
+                .ForMember(c => c.Clinic_Name, c => c.MapFrom(s => s.Clinic.Name))
+                .ForMember(c => c.User_Name, c => c.MapFrom(s => s.User.Name))
+                .ForMember(c => c.First_Name, c => c.MapFrom(s => s.User.First_Name))
+                .ForMember(c => c.Last_Name, c => c.MapFrom(s => s.User.Last_Name))
+                .ForMember(c => c.Phone_Number, c => c.MapFrom(s => s.User.Phone_Number))
+                .ForMember(c => c.Telephone_Number, c => c.MapFrom(s => s.User.Telephone_Number))
+                .ForMember(c => c.Email, c => c.MapFrom(s => s.User.Email));
             CreateMap<Secretary, AddSecreataryViewModel>().ReverseMap();
+
+            // Clinic..
+            CreateMap<Clinic, ClinicViewModel>().ReverseMap();
+
+            // Working_Days..
+            CreateMap<Working_Day, Working_DaysViewModel>().ReverseMap();
+
         }
     }
 }

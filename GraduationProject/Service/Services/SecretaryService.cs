@@ -31,7 +31,7 @@ namespace GraduationProject.Service.Services
             if (SecretaryEntity == null)
                 return new ApiResponse(false, $"No Secretary Found With This Id: ({SecretaryId})");
 
-            SecretaryViewModel SecretaryViewModel = _Mapper.Map<SecretaryViewModel>(SecretaryEntity);
+            AllSecretaryDataViewModel SecretaryViewModel = _Mapper.Map<AllSecretaryDataViewModel>(SecretaryEntity);
 
             return new ApiResponse(SecretaryViewModel, "Succeed");
         }

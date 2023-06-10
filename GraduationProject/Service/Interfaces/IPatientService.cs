@@ -9,6 +9,6 @@ namespace GraduationProject.Service.Interfaces
         ApiResponse EditPatientMedicalInfo(EditMedical_InformationsViewModel PatientMedicalInformationViewModel);
         ApiResponse GetMedicalInformationByPatientId(int PatientId);
         ApiResponse GetPatientById(int PatientId);
-        ApiResponse GetAllDocotorsPatients(int UserId, ComplexFilter Filter);
+        ApiResponse GetAllDoctorsPatients(int UserId, ComplexFilter Filter);
     }
 }

@@ -30,7 +30,7 @@ namespace GraduationProject.Service.Services
                     $"({PatientMedicalInformationViewModel.PatientId})");
 
             Medical_Information PatientMedical_InformationEntity = _Mapper.Map<Medical_Information>(PatientMedicalInformationViewModel);
-            
+
             _DbContext.Medical_Informations.Add(PatientMedical_InformationEntity);
             _DbContext.SaveChanges();
 
@@ -81,12 +81,12 @@ namespace GraduationProject.Service.Services
 
             return new ApiResponse(PatientViewModel, "Succeed");
         }
-        public ApiResponse GetAllDocotorsPatients(int UserId, ComplexFilter Filter)
+        public ApiResponse GetAllDoctorsPatients(int UserId, ComplexFilter Filter)
         {
             Doctor? DoctorEntity = _DbContext.Doctors.FirstOrDefault(x => x.UserId == UserId);
 
             if (DoctorEntity == null)
-                return new ApiResponse(false, $"No User Found With This Id: ({UserId})");
+                return new ApiResponse(false, $"No Doctor Found With This Id: ({UserId})");
 
             List<PatientViewModel> Patients = _Mapper.Map<List<PatientViewModel>>(_DbContext.Appointments
                 .Where(x => x.DoctorId == DoctorEntity.Id)

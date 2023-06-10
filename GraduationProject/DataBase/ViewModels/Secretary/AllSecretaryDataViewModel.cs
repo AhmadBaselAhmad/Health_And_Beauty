@@ -2,7 +2,7 @@
 
 namespace GraduationProject.DataBase.ViewModels.Secretary
 {
-    public class SecretaryViewModel
+    public class AllSecretaryDataViewModel
     {
         public int Id { get; set; }
 
@@ -14,5 +14,7 @@ namespace GraduationProject.DataBase.ViewModels.Secretary
         public string First_Name { get; set; }
         public string Last_Name { get; set; }
         public string Phone_Number { get; set; }
+        public string Telephone_Number { get; set; }
+        public string Email { get; set; }
     }
 }

@@ -4,6 +4,7 @@ using GraduationProject.DataBase.ViewModels.Medical_Information;
 using GraduationProject.Service.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.IdentityModel.Tokens.Jwt;
 
 namespace GraduationProject.Controllers
 {
@@ -12,9 +13,11 @@ namespace GraduationProject.Controllers
     public class PatientController : ControllerBase
     {
         private IPatientService _PatientService;
-        public PatientController(IPatientService PatientService)
+        private readonly IHttpContextAccessor _HttpContextAccessor;
+        public PatientController(IPatientService PatientService, IHttpContextAccessor HttpContextAccessor)
         {
             _PatientService = PatientService;
+            _HttpContextAccessor = HttpContextAccessor;
         }
         [HttpPost("AddPatientMedicalInfo")]
         public IActionResult AddPatientMedicalInfo(AddMedical_InformationsViewModel PatientMedicalInformationViewModel)
@@ -45,7 +48,7 @@ namespace GraduationProject.Controllers
                 return BadRequest(Response);
 
             return Ok(Response);
-        } 
+        }
         [HttpGet("GetPatientById")]
         public IActionResult GetPatientById(int PatientId)
         {
@@ -59,8 +62,12 @@ namespace GraduationProject.Controllers
         [HttpPost("GetAllDocotorsPatients")]
         public IActionResult GetAllDocotorsPatients(ComplexFilter Filter)
         {
-            int UserId = 0;
-            ApiResponse? Response = _PatientService.GetAllDocotorsPatients(UserId, Filter);
+            JwtSecurityTokenHandler JWTHandler = new JwtSecurityTokenHandler();
+
+            int UserId = Convert.ToInt32(JWTHandler.ReadJwtToken(_HttpContextAccessor.HttpContext
+                .Request.Headers["Authorization"].ToString().Split(" ")[1]).Claims.ToList()[0].Value);
+
+            ApiResponse? Response = _PatientService.GetAllDoctorsPatients(UserId, Filter);
 
             if (!string.IsNullOrEmpty(Response.ErrorMessage) ? Response.ErrorMessage != "Succeed" : false)
                 return BadRequest(Response);
