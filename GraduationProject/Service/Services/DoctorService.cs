@@ -4,6 +4,7 @@ using GraduationProject.DataBase.Helpers;
 using GraduationProject.DataBase.Models;
 using GraduationProject.DataBase.ViewModels.Clinic;
 using GraduationProject.DataBase.ViewModels.Doctor;
+using GraduationProject.DataBase.ViewModels.Doctor_Working_Hour;
 using GraduationProject.Service.Interfaces;
 using Microsoft.AspNetCore.Cryptography.KeyDerivation;
 using Microsoft.EntityFrameworkCore;
@@ -129,6 +130,11 @@ namespace GraduationProject.Service.Services
                 return new ApiResponse(false, $"No Doctor Found With This Id: {DoctorId}");
 
             DoctorViewModel DoctorViewModel = _Mapper.Map<DoctorViewModel>(Doctor);
+            var xx = _DbContext.Doctor_Working_Hours
+                .Where(x => x.DoctorId == DoctorId).ToList();
+            DoctorViewModel.Doctor_Working_Hours = _Mapper.Map<List<Doctor_Working_HourViewModel>>(_DbContext.Doctor_Working_Hours
+                .Where(x => x.DoctorId == DoctorId).ToList());
+
             return new ApiResponse(DoctorViewModel, "Succeed");
         }
         public ApiResponse ChangeHeaderOfClinic(int NewHeadOfSectionId, int ClinicId)

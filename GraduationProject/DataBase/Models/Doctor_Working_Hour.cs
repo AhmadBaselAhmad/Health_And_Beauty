@@ -3,9 +3,8 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace GraduationProject.DataBase.Models
 {
-    public class Doctor_Working_Hour: TimeStampModel
+    public class Doctor_Working_Hour : TimeStampModel
     {
-
         public int Id { get; set; }
 
         public int DoctorId { get; set; }

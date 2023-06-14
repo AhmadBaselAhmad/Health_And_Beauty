@@ -2,6 +2,7 @@
 using GraduationProject.DataBase.Models;
 using GraduationProject.DataBase.ViewModels.Clinic;
 using GraduationProject.DataBase.ViewModels.Doctor;
+using GraduationProject.DataBase.ViewModels.Doctor_Working_Hour;
 using GraduationProject.DataBase.ViewModels.DynamicAttribute;
 using GraduationProject.DataBase.ViewModels.Medical_Information;
 using GraduationProject.DataBase.ViewModels.Patient;
@@ -24,9 +25,12 @@ namespace GraduationProject.DataBase.AutoMapper
             CreateMap<Doctor, AddDoctorViewModel>().ReverseMap();
             CreateMap<Doctor, DoctorViewModel>()
                 .ForMember(c => c.Clinic_Name, c => c.MapFrom(s => s.Clinic.Name))
-                .ForMember(c => c.Doctor_Name, c => c.MapFrom(s => s.User.Name))
+                .ForMember(c => c.Name, c => c.MapFrom(s => s.User.Name))
                 .ForMember(c => c.First_Name, c => c.MapFrom(s => s.User.First_Name))
-                .ForMember(c => c.Last_Name, c => c.MapFrom(s => s.User.Last_Name));
+                .ForMember(c => c.Last_Name, c => c.MapFrom(s => s.User.Last_Name))
+                .ForMember(c => c.Phone_Number, c => c.MapFrom(s => s.User.Phone_Number))
+                .ForMember(c => c.Telephone_Number, c => c.MapFrom(s => s.User.Telephone_Number))
+                .ForMember(c => c.Email, c => c.MapFrom(s => s.User.Email));
             CreateMap<Doctor, EditDoctorViewModel>().ReverseMap();
 
             // Dynamic Attribute..
@@ -71,6 +75,10 @@ namespace GraduationProject.DataBase.AutoMapper
             CreateMap<Models.Service, ServiceViewModel>()
                 .ForMember(c => c.Clinic_Name, c => c.MapFrom(f => f.Clinic.Name));
             CreateMap<Models.Service, AddClinicServiceViewModel>().ReverseMap();
+
+            // Doctor_Working_Hours..
+            CreateMap<Doctor_Working_Hour, Doctor_Working_HourViewModel>()
+                .ForMember(c => c.WorkingDays_Name, c => c.MapFrom(f => f.WorkingDays.Day));
         }
     }
 }
