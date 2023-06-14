@@ -117,8 +117,33 @@ namespace GraduationProject.Service.Services
             OldDoctorData.Specialization = DoctorNewData.Specialization;
             OldDoctorData.Degree = DoctorNewData.Degree;
 
-            _DbContext.Doctors.Update(OldDoctorData);
+            User? DoctorUser = _DbContext.Users
+                .FirstOrDefault(x => x.Id == OldDoctorData.UserId);
+
+            if (DoctorUser == null)
+                return new ApiResponse(false, $"No User Found With This Id: {OldDoctorData.UserId}");
+
+            bool CheckUserNameIfAlreadyExit = _DbContext.Users
+                .Any(x => x.Name.ToLower() == DoctorNewData.Name.ToLower());
+
+            if (CheckUserNameIfAlreadyExit)
+                return new ApiResponse(false, $"This User Name: {DoctorNewData.Name} is Already Used");
+
+            bool CheckEmailIfAlreadyExit = _DbContext.Users
+                .Any(x => x.Email.ToLower() == DoctorNewData.Email.ToLower());
+
+            if (CheckEmailIfAlreadyExit)
+                return new ApiResponse(false, $"This Email: {DoctorNewData.Email} is Already Used");
+
+            DoctorUser.Telephone_Number = DoctorNewData.Telephone_Number;
+            DoctorUser.Phone_Number = DoctorNewData.Phone_Number;
+            DoctorUser.Last_Name = DoctorNewData.Last_Name;
+            DoctorUser.First_Name = DoctorNewData.First_Name;
+            DoctorUser.Email = DoctorNewData.Email;
+            DoctorUser.Name = DoctorNewData.Name;
+
             _DbContext.SaveChanges();
+
             return new ApiResponse(true, "Succeed");
         }
         public ApiResponse GetDoctorById(int DoctorId)
@@ -130,9 +155,9 @@ namespace GraduationProject.Service.Services
                 return new ApiResponse(false, $"No Doctor Found With This Id: {DoctorId}");
 
             DoctorViewModel DoctorViewModel = _Mapper.Map<DoctorViewModel>(Doctor);
-            var xx = _DbContext.Doctor_Working_Hours
-                .Where(x => x.DoctorId == DoctorId).ToList();
+
             DoctorViewModel.Doctor_Working_Hours = _Mapper.Map<List<Doctor_Working_HourViewModel>>(_DbContext.Doctor_Working_Hours
+                .Include(x => x.WorkingDays)
                 .Where(x => x.DoctorId == DoctorId).ToList());
 
             return new ApiResponse(DoctorViewModel, "Succeed");
