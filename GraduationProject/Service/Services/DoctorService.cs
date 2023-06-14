@@ -130,7 +130,8 @@ namespace GraduationProject.Service.Services
                 return new ApiResponse(false, $"No Doctor Found With This Id: {DoctorId}");
 
             DoctorViewModel DoctorViewModel = _Mapper.Map<DoctorViewModel>(Doctor);
-
+            var xx = _DbContext.Doctor_Working_Hours
+                .Where(x => x.DoctorId == DoctorId).ToList();
             DoctorViewModel.Doctor_Working_Hours = _Mapper.Map<List<Doctor_Working_HourViewModel>>(_DbContext.Doctor_Working_Hours
                 .Where(x => x.DoctorId == DoctorId).ToList());
 
