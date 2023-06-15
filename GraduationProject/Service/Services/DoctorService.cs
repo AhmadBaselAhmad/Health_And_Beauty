@@ -76,7 +76,7 @@ namespace GraduationProject.Service.Services
         public ApiResponse GetAllDoctors(ComplexFilter Filter, int? ClinicId)
         {
             List<DoctorViewModel> Doctors = _Mapper.Map<List<DoctorViewModel>>(_DbContext.Doctors
-                .Include(x => x.User).Include(x => x.Clinic).Include(x => x.Doctor_Working_Hours)
+                .Include(x => x.User).Include(x => x.Clinic)
                 .Where(x => (!string.IsNullOrEmpty(Filter.SearchQuery) ?
                     x.User.Name.ToLower().StartsWith(Filter.SearchQuery) : true) &&
                     (ClinicId != null ? x.ClinicId == ClinicId.Value : true)).ToList());
@@ -148,19 +148,26 @@ namespace GraduationProject.Service.Services
         }
         public ApiResponse GetDoctorById(int UserId)
         {
-            Doctor? Doctor = _DbContext.Doctors.Include(x => x.User).Include(x => x.Clinic)
-                .FirstOrDefault(x => x.UserId == UserId);
+            try
+            {
+                Doctor? Doctor = _DbContext.Doctors.Include(x => x.User).Include(x => x.Clinic)
+                    .FirstOrDefault(x => x.UserId == UserId);
 
-            if (Doctor == null)
-                return new ApiResponse(false, $"No Doctor Found With This Id: {UserId}");
+                if (Doctor == null)
+                    return new ApiResponse(false, $"No Doctor Found With This Id: {UserId}");
 
-            DoctorViewModel DoctorViewModel = _Mapper.Map<DoctorViewModel>(Doctor);
+                DoctorViewModel DoctorViewModel = _Mapper.Map<DoctorViewModel>(Doctor);
 
-            DoctorViewModel.Doctor_Working_Hours = _Mapper.Map<List<Doctor_Working_HourViewModel>>(_DbContext.Doctor_Working_Hours
-                .Include(x => x.WorkingDays)
-                .Where(x => x.DoctorId == Doctor.Id).ToList());
+                DoctorViewModel.Doctor_Working_Hours = _Mapper.Map<List<Doctor_Working_HourViewModel>>(_DbContext.Doctor_Working_Hours
+                    .Include(x => x.WorkingDays)
+                    .Where(x => x.DoctorId == Doctor.Id).ToList());
 
-            return new ApiResponse(DoctorViewModel, "Succeed");
+                return new ApiResponse(DoctorViewModel, "Succeed");
+            }
+            catch (Exception err)
+            {
+                throw;
+            }
         }
         public ApiResponse ChangeHeaderOfClinic(int NewHeadOfSectionId, int ClinicId)
         {
