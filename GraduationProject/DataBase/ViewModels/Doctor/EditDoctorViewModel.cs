@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using GraduationProject.DataBase.ViewModels.Doctor_Working_Hour;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace GraduationProject.DataBase.ViewModels.Doctor
 {
@@ -14,5 +15,6 @@ namespace GraduationProject.DataBase.ViewModels.Doctor
         public string Phone_Number { get; set; }
         public string Telephone_Number { get; set; }
         public string Email { get; set; }
+        public List<Doctor_Working_HourViewModel> Doctor_Working_Hours { get; set; }
     }
 }

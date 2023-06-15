@@ -142,6 +142,22 @@ namespace GraduationProject.Service.Services
             DoctorUser.Email = DoctorNewData.Email;
             DoctorUser.Name = DoctorNewData.Name;
 
+            List<Doctor_Working_Hour> DoctorWorkingHourEntities = _DbContext.Doctor_Working_Hours
+                .Where(x => x.DoctorId == DoctorNewData.Id).ToList();
+
+            foreach (Doctor_Working_Hour DoctorWorkingHourEntity in DoctorWorkingHourEntities)
+            {
+                Doctor_Working_HourViewModel? NewDoctorWorkingHours = DoctorNewData.Doctor_Working_Hours.
+                    FirstOrDefault(x => x.Id == DoctorWorkingHourEntity.Id);
+
+                if (NewDoctorWorkingHours != null)
+                {
+                    DoctorWorkingHourEntity.From = NewDoctorWorkingHours.From;
+                    DoctorWorkingHourEntity.To = NewDoctorWorkingHours.To;
+                    DoctorWorkingHourEntity.Off = NewDoctorWorkingHours.Off;
+                }
+            }
+
             _DbContext.SaveChanges();
 
             return new ApiResponse(true, "Succeed");
