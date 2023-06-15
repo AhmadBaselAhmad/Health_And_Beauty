@@ -76,7 +76,7 @@ namespace GraduationProject.Service.Services
         public ApiResponse GetAllDoctors(ComplexFilter Filter, int? ClinicId)
         {
             List<DoctorViewModel> Doctors = _Mapper.Map<List<DoctorViewModel>>(_DbContext.Doctors
-                .Include(x => x.User).Include(x => x.Clinic)
+                .Include(x => x.User).Include(x => x.Clinic).Include(x => x.Doctor_Working_Hours)
                 .Where(x => (!string.IsNullOrEmpty(Filter.SearchQuery) ?
                     x.User.Name.ToLower().StartsWith(Filter.SearchQuery) : true) &&
                     (ClinicId != null ? x.ClinicId == ClinicId.Value : true)).ToList());
@@ -146,19 +146,19 @@ namespace GraduationProject.Service.Services
 
             return new ApiResponse(true, "Succeed");
         }
-        public ApiResponse GetDoctorById(int DoctorId)
+        public ApiResponse GetDoctorById(int UserId)
         {
             Doctor? Doctor = _DbContext.Doctors.Include(x => x.User).Include(x => x.Clinic)
-                .FirstOrDefault(x => x.Id == DoctorId);
+                .FirstOrDefault(x => x.UserId == UserId);
 
             if (Doctor == null)
-                return new ApiResponse(false, $"No Doctor Found With This Id: {DoctorId}");
+                return new ApiResponse(false, $"No Doctor Found With This Id: {UserId}");
 
             DoctorViewModel DoctorViewModel = _Mapper.Map<DoctorViewModel>(Doctor);
 
             DoctorViewModel.Doctor_Working_Hours = _Mapper.Map<List<Doctor_Working_HourViewModel>>(_DbContext.Doctor_Working_Hours
                 .Include(x => x.WorkingDays)
-                .Where(x => x.DoctorId == DoctorId).ToList());
+                .Where(x => x.DoctorId == Doctor.Id).ToList());
 
             return new ApiResponse(DoctorViewModel, "Succeed");
         }

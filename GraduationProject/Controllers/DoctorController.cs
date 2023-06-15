@@ -51,9 +51,9 @@ namespace GraduationProject.Controllers
             return Ok(Response);
         }
         [HttpGet("GetDoctorById")]
-        public IActionResult GetDoctorById(int DoctorId)
+        public IActionResult GetDoctorById(int UserId)
         {
-            ApiResponse? Response = _DoctorService.GetDoctorById(DoctorId);
+            ApiResponse? Response = _DoctorService.GetDoctorById(UserId);
 
             if (!string.IsNullOrEmpty(Response.ErrorMessage) ? Response.ErrorMessage != "Succeed" : false)
                 return BadRequest(Response);

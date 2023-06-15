@@ -18,5 +18,7 @@ namespace GraduationProject.DataBase.Models
         public int ClinicId { get; set; }
         [ForeignKey("ClinicId")]
         public Clinic? Clinic { get; set; }
+
+        public ICollection<Doctor_Working_Hour> Doctor_Working_Hours { get; set; }
     }
 }

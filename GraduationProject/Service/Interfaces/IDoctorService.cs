@@ -8,7 +8,7 @@ namespace GraduationProject.Service.Interfaces
         ApiResponse AddNewDoctor(AddDoctorViewModel NewDoctor);
         ApiResponse GetAllDoctors(ComplexFilter Filter, int? ClinicId);
         ApiResponse EditDoctor(EditDoctorViewModel DoctorNewData);
-        ApiResponse GetDoctorById(int DoctorId);
+        ApiResponse GetDoctorById(int UserId);
         ApiResponse DeleteDoctor(int DoctorId);
     }
 }
