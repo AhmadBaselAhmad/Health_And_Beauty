@@ -107,7 +107,7 @@ namespace GraduationProject.Service.Services
                     .Include(x => x.WorkingDays)
                     .Select(x => x.WorkingDays.Day).ToList();
 
-                Doctor.DoctorWorkingDays = String.Join(" ", DoctorWorkingDays);
+                Doctor.DoctorWorkingDays = String.Join("-", DoctorWorkingDays);
             }
 
             return new ApiResponse(Doctors, "Succeed", Count);
