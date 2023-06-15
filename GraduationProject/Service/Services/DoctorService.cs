@@ -148,26 +148,19 @@ namespace GraduationProject.Service.Services
         }
         public ApiResponse GetDoctorById(int UserId)
         {
-            try
-            {
-                Doctor? Doctor = _DbContext.Doctors.Include(x => x.User).Include(x => x.Clinic)
-                    .FirstOrDefault(x => x.UserId == UserId);
+            Doctor? Doctor = _DbContext.Doctors.Include(x => x.User).Include(x => x.Clinic)
+                .FirstOrDefault(x => x.UserId == UserId);
 
-                if (Doctor == null)
-                    return new ApiResponse(false, $"No Doctor Found With This Id: {UserId}");
+            if (Doctor == null)
+                return new ApiResponse(false, $"No Doctor Found With This Id: {UserId}");
 
-                DoctorViewModel DoctorViewModel = _Mapper.Map<DoctorViewModel>(Doctor);
+            DoctorViewModel DoctorViewModel = _Mapper.Map<DoctorViewModel>(Doctor);
 
-                DoctorViewModel.Doctor_Working_Hours = _Mapper.Map<List<Doctor_Working_HourViewModel>>(_DbContext.Doctor_Working_Hours
-                    .Include(x => x.WorkingDays)
-                    .Where(x => x.DoctorId == Doctor.Id).ToList());
+            DoctorViewModel.Doctor_Working_Hours = _Mapper.Map<List<Doctor_Working_HourViewModel>>(_DbContext.Doctor_Working_Hours
+                .Include(x => x.WorkingDays)
+                .Where(x => x.DoctorId == Doctor.Id).ToList());
 
-                return new ApiResponse(DoctorViewModel, "Succeed");
-            }
-            catch (Exception err)
-            {
-                throw;
-            }
+            return new ApiResponse(DoctorViewModel, "Succeed");
         }
         public ApiResponse ChangeHeaderOfClinic(int NewHeadOfSectionId, int ClinicId)
         {
