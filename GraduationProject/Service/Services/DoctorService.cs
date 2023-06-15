@@ -105,7 +105,7 @@ namespace GraduationProject.Service.Services
                 List<string> DoctorWorkingDays = _DbContext.Doctor_Working_Hours
                     .Where(x => x.DoctorId == Doctor.Id && !x.Off && !x.WorkingDays.Off)
                     .Include(x => x.WorkingDays)
-                    .Select(x => x.WorkingDays.Day).ToList();
+                    .Select(x => x.WorkingDays.Day.Substring(0, 3)).ToList();
 
                 Doctor.DoctorWorkingDays = String.Join("-", DoctorWorkingDays);
             }
