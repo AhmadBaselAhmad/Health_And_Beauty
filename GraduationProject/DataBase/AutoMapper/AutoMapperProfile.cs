@@ -31,6 +31,14 @@ namespace GraduationProject.DataBase.AutoMapper
                 .ForMember(c => c.Phone_Number, c => c.MapFrom(s => s.User.Phone_Number))
                 .ForMember(c => c.Telephone_Number, c => c.MapFrom(s => s.User.Telephone_Number))
                 .ForMember(c => c.Email, c => c.MapFrom(s => s.User.Email));
+            CreateMap<Doctor, GetAllDoctorViewModel>()
+                .ForMember(c => c.Clinic_Name, c => c.MapFrom(s => s.Clinic.Name))
+                .ForMember(c => c.Name, c => c.MapFrom(s => s.User.Name))
+                .ForMember(c => c.First_Name, c => c.MapFrom(s => s.User.First_Name))
+                .ForMember(c => c.Last_Name, c => c.MapFrom(s => s.User.Last_Name))
+                .ForMember(c => c.Phone_Number, c => c.MapFrom(s => s.User.Phone_Number))
+                .ForMember(c => c.Telephone_Number, c => c.MapFrom(s => s.User.Telephone_Number))
+                .ForMember(c => c.Email, c => c.MapFrom(s => s.User.Email));
             CreateMap<Doctor, EditDoctorViewModel>().ReverseMap();
 
             // Dynamic Attribute..

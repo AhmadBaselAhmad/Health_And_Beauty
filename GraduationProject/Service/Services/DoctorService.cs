@@ -75,7 +75,7 @@ namespace GraduationProject.Service.Services
         }
         public ApiResponse GetAllDoctors(ComplexFilter Filter, int? ClinicId)
         {
-            List<DoctorViewModel> Doctors = _Mapper.Map<List<DoctorViewModel>>(_DbContext.Doctors
+            List<GetAllDoctorViewModel> Doctors = _Mapper.Map<List<GetAllDoctorViewModel>>(_DbContext.Doctors
                 .Include(x => x.User).Include(x => x.Clinic)
                 .Where(x => (!string.IsNullOrEmpty(Filter.SearchQuery) ?
                     x.User.Name.ToLower().StartsWith(Filter.SearchQuery) : true) &&
@@ -95,16 +95,23 @@ namespace GraduationProject.Service.Services
 
                 Doctors = Doctors.Skip((Filter.PageIndex - 1) * Filter.PageSize)
                     .Take(Filter.PageSize).ToList();
-
-                return new ApiResponse(Doctors, "Succeed", Count);
             }
             else
-            {
                 Doctors = Doctors.Skip((Filter.PageIndex - 1) * Filter.PageSize)
                     .Take(Filter.PageSize).ToList();
 
-                return new ApiResponse(Doctors, "Succeed", Count);
+            foreach (GetAllDoctorViewModel Doctor in Doctors)
+            {
+                List<string> DoctorWorkingDays = _DbContext.Doctor_Working_Hours
+                    .Where(x => x.DoctorId == Doctor.Id && !x.Off && !x.WorkingDays.Off)
+                    .Include(x => x.WorkingDays)
+                    .Select(x => x.WorkingDays.Day).ToList();
+
+                Doctor.DoctorWorkingDays = String.Join(" ", DoctorWorkingDays);
             }
+
+            return new ApiResponse(Doctors, "Succeed", Count);
+
         }
         public ApiResponse EditDoctor(EditDoctorViewModel DoctorNewData)
         {
