@@ -1,22 +1,18 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 
-namespace GraduationProject.DataBase.Models
+namespace GraduationProject.DataBase.ViewModels.Appointment
 {
-    public class Appointment : TimeStampModel
+    public class AppointmentViewModel
     {
         public int Id { get; set; }
 
         public int PatientId { get; set; }
-        [ForeignKey("PatientId")]
-        public Patient? Patient { get; set; }
+        public string? Patient_Name { get; set; }
 
         public int DoctorId { get; set; }
-        [ForeignKey("DoctorId")]
-        public Doctor? Doctor { get; set; }
 
         public int ServiceId { get; set; }
-        [ForeignKey("ServiceId")]
-        public Models.Service? Service { get; set; }
+        public string? Service_Name { get; set; }
 
         public DateOnly Date { get; set; }
         public TimeOnly Time { get; set; }

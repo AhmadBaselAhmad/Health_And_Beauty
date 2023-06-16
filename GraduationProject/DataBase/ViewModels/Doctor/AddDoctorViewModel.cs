@@ -1,4 +1,5 @@
 ﻿using GraduationProject.DataBase.Models;
+using GraduationProject.DataBase.ViewModels.Doctor_Working_Hour;
 using GraduationProject.DataBase.ViewModels.User;
 using System.ComponentModel.DataAnnotations.Schema;
 

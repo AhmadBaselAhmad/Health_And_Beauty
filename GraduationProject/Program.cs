@@ -32,6 +32,8 @@ builder.Services.AddScoped<IAttributeViewManagement, AttributeViewManagement>();
 builder.Services.AddScoped<IClinicService, ClinicService>();
 builder.Services.AddScoped<IWorking_DaysService, Working_DaysService>();
 builder.Services.AddScoped<IMyClinicService, MyClinicService>();
+builder.Services.AddDateOnlyTimeOnlyStringConverters();
+builder.Services.AddSwaggerGen(c => c.UseDateOnlyTimeOnlyStringConverters());
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>

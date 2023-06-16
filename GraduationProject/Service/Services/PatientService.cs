@@ -89,6 +89,7 @@ namespace GraduationProject.Service.Services
                 return new ApiResponse(false, $"No Doctor Found With This Id: ({UserId})");
 
             List<PatientViewModel> Patients = _Mapper.Map<List<PatientViewModel>>(_DbContext.Appointments
+                .Include(x => x.Patient).Include(x => x.Patient.User)
                 .Where(x => x.DoctorId == DoctorEntity.Id)
                 .Select(x => x.Patient).ToList());
 

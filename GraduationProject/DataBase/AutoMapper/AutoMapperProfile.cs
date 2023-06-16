@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using GraduationProject.DataBase.Models;
+using GraduationProject.DataBase.ViewModels.Appointment;
 using GraduationProject.DataBase.ViewModels.Clinic;
 using GraduationProject.DataBase.ViewModels.Doctor;
 using GraduationProject.DataBase.ViewModels.Doctor_Working_Hour;
@@ -55,7 +56,7 @@ namespace GraduationProject.DataBase.AutoMapper
 
             // Patient..
             CreateMap<Patient, PatientViewModel>()
-                .ForMember(c => c.UserInformation, c => c.MapFrom(s => s.User)).ReverseMap();
+                .ForMember(c => c.UserInformation, c => c.MapFrom(s => s.User));
 
             // Secretary..
             CreateMap<Secretary, SecretaryViewModel>()
@@ -87,6 +88,11 @@ namespace GraduationProject.DataBase.AutoMapper
             // Doctor_Working_Hours..
             CreateMap<Doctor_Working_Hour, Doctor_Working_HourViewModel>()
                 .ForMember(c => c.WorkingDays_Name, c => c.MapFrom(f => f.WorkingDays.Day));
+
+            // Appointment..
+            CreateMap<Appointment, AppointmentViewModel>()
+                .ForMember(c => c.Service_Name, c => c.MapFrom(f => f.Service.Name))
+                .ForMember(c => c.Patient_Name, c => c.MapFrom(f => f.Patient.User.Name));
         }
     }
 }
