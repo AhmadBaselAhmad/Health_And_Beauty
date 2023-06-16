@@ -5,7 +5,6 @@ namespace GraduationProject.DataBase.Models
 {
     public class Medicine : TimeStampModel
     {
-
         public int Id { get; set; }
 
         public int? PrescriptionId { get; set; }

@@ -1,4 +1,8 @@
 ﻿using GraduationProject.DataBase.Models;
+using GraduationProject.DataBase.ViewModels.Allergies;
+using GraduationProject.DataBase.ViewModels.Immunization;
+using GraduationProject.DataBase.ViewModels.Medicine;
+using GraduationProject.DataBase.ViewModels.Surgery;
 using GraduationProject.Service.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -26,8 +30,8 @@ namespace GraduationProject.Controllers
             {
                 IFormFile AllergiesFile = new FormFile(stream, 0, stream.Length, null, Path.GetFileName(stream.Name));
 
-                var response = _MedicalInformationService.GetAllAlergies(AllergiesFile);
-                return Ok(response);
+                var Response = _MedicalInformationService.GetAllAlergies(AllergiesFile);
+                return Ok(Response);
             }
         }
         [HttpGet("GetAllImmunizations")]
@@ -39,8 +43,8 @@ namespace GraduationProject.Controllers
             {
                 IFormFile ImmunizationsFile = new FormFile(stream, 0, stream.Length, null, Path.GetFileName(stream.Name));
 
-                var response = _MedicalInformationService.GetAllImmunizations(ImmunizationsFile);
-                return Ok(response);
+                var Response = _MedicalInformationService.GetAllImmunizations(ImmunizationsFile);
+                return Ok(Response);
             }
         }
         [HttpGet("GetAllMedicines")]
@@ -52,8 +56,8 @@ namespace GraduationProject.Controllers
             {
                 IFormFile MedicinesFile = new FormFile(stream, 0, stream.Length, null, Path.GetFileName(stream.Name));
 
-                var response = _MedicalInformationService.GetAllMedicines(MedicinesFile);
-                return Ok(response);
+                var Response = _MedicalInformationService.GetAllMedicines(MedicinesFile);
+                return Ok(Response);
             }
         }
         [HttpGet("GetAllSurgeries")]
@@ -65,10 +69,33 @@ namespace GraduationProject.Controllers
             {
                 IFormFile SurgeriesFile = new FormFile(stream, 0, stream.Length, null, Path.GetFileName(stream.Name));
 
-                var response = _MedicalInformationService.GetAllSurgeries(SurgeriesFile);
-                return Ok(response);
+                var Response = _MedicalInformationService.GetAllSurgeries(SurgeriesFile);
+                return Ok(Response);
             }
         }
-
+        [HttpPost("AddAllergies")]
+        public IActionResult AddAllergies(List<AddAllergyViewModel> NewAllergies)
+        {
+            var Response = _MedicalInformationService.AddAllergies(NewAllergies);
+            return Ok(Response);
+        }
+        [HttpPost("AddImmunizations")]
+        public IActionResult AddImmunizations(List<AddImmunizationViewModel> NewImmunizations)
+        {
+            var Response = _MedicalInformationService.AddImmunizations(NewImmunizations);
+            return Ok(Response);
+        }
+        [HttpPost("AddMedicines")]
+        public IActionResult AddMedicines(List<AddMedicineViewModel> NewMedicines)
+        {
+            var Response = _MedicalInformationService.AddMedicines(NewMedicines);
+            return Ok(Response);
+        }
+        [HttpPost("AddSurgeries")]
+        public IActionResult AddSurgeries(List<AddSurgeryViewModel> NewSurgeries)
+        {
+            var Response = _MedicalInformationService.AddSurgeries(NewSurgeries);
+            return Ok(Response);
+        }
     }
 }

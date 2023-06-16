@@ -239,7 +239,42 @@ namespace GraduationProject.Service.Services
 
             return new ApiResponse(SurgeriesOutPuts, "Succeed", SurgeriesOutPuts.Count());
         }
+        public ApiResponse AddAllergies(List<AddAllergyViewModel> NewAllergies)
+        {
+            List<Allergy> NewSergeriesEntities = _Mapper.Map<List<Allergy>>(NewAllergies);
 
+            _DbContext.Allergies.AddRange(NewSergeriesEntities);
+            _DbContext.SaveChanges();
+
+            return new ApiResponse(true, "Succeed");
+        }
+        public ApiResponse AddImmunizations(List<AddImmunizationViewModel> NewImmunizations)
+        {
+            List<Immunization> NewImmunizationsEntities = _Mapper.Map<List<Immunization>>(NewImmunizations);
+
+            _DbContext.Immunizations.AddRange(NewImmunizationsEntities);
+            _DbContext.SaveChanges();
+
+            return new ApiResponse(true, "Succeed");
+        }
+        public ApiResponse AddMedicines(List<AddMedicineViewModel> NewMedicines)
+        {
+            List<Medicine> NewMedicinesEntities = _Mapper.Map<List<Medicine>>(NewMedicines);
+
+            _DbContext.Medicines.AddRange(NewMedicinesEntities);
+            _DbContext.SaveChanges();
+
+            return new ApiResponse(true, "Succeed");
+        }
+        public ApiResponse AddSurgeries(List<AddSurgeryViewModel> NewSurgeries)
+        {
+            List<Surgery> NewSergeriesEntities = _Mapper.Map<List<Surgery>>(NewSurgeries);
+
+            _DbContext.Surgeries.AddRange(NewSergeriesEntities);
+            _DbContext.SaveChanges();
+
+            return new ApiResponse(true, "Succeed");
+        }
         public string FileConverterFuction(IFormFile file)
         {
             string fileDirectory = Directory.GetCurrentDirectory();

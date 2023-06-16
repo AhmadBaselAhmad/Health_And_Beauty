@@ -1,14 +1,18 @@
 ﻿using AutoMapper;
 using GraduationProject.DataBase.Models;
+using GraduationProject.DataBase.ViewModels.Allergies;
 using GraduationProject.DataBase.ViewModels.Appointment;
 using GraduationProject.DataBase.ViewModels.Clinic;
 using GraduationProject.DataBase.ViewModels.Doctor;
 using GraduationProject.DataBase.ViewModels.Doctor_Working_Hour;
 using GraduationProject.DataBase.ViewModels.DynamicAttribute;
+using GraduationProject.DataBase.ViewModels.Immunization;
 using GraduationProject.DataBase.ViewModels.Medical_Information;
+using GraduationProject.DataBase.ViewModels.Medicine;
 using GraduationProject.DataBase.ViewModels.Patient;
 using GraduationProject.DataBase.ViewModels.Secretary;
 using GraduationProject.DataBase.ViewModels.Service;
+using GraduationProject.DataBase.ViewModels.Surgery;
 using GraduationProject.DataBase.ViewModels.User;
 using GraduationProject.DataBase.ViewModels.Working_Days;
 
@@ -93,6 +97,18 @@ namespace GraduationProject.DataBase.AutoMapper
             CreateMap<Appointment, AppointmentViewModel>()
                 .ForMember(c => c.Service_Name, c => c.MapFrom(f => f.Service.Name))
                 .ForMember(c => c.Patient_Name, c => c.MapFrom(f => f.Patient.User.Name));
+
+            // Surgery..
+            CreateMap<Surgery, AddSurgeryViewModel>().ReverseMap();
+
+            // Allergy..
+            CreateMap<Allergy, AddAllergyViewModel>().ReverseMap();
+
+            // Immunization..
+            CreateMap<Immunization, AddImmunizationViewModel>().ReverseMap();
+
+            // Medicine..
+            CreateMap<Medicine, AddMedicineViewModel>().ReverseMap();
         }
     }
 }
