@@ -1,12 +1,15 @@
-﻿using GraduationProject.DataBase.Models;
+﻿using GraduationProject.DataBase.Helpers;
+using GraduationProject.DataBase.Models;
 using GraduationProject.DataBase.ViewModels.Allergies;
 using GraduationProject.DataBase.ViewModels.Immunization;
 using GraduationProject.DataBase.ViewModels.Medicine;
 using GraduationProject.DataBase.ViewModels.Surgery;
 using GraduationProject.Service.Interfaces;
+using GraduationProject.Service.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.IO;
+using static System.Net.WebRequestMethods;
 
 namespace GraduationProject.Controllers
 {
@@ -30,7 +33,11 @@ namespace GraduationProject.Controllers
             {
                 IFormFile AllergiesFile = new FormFile(stream, 0, stream.Length, null, Path.GetFileName(stream.Name));
 
-                var Response = _MedicalInformationService.GetAllAlergies(AllergiesFile);
+                ApiResponse Response = _MedicalInformationService.GetAllAlergies(AllergiesFile);
+
+                if (!string.IsNullOrEmpty(Response.ErrorMessage) ? Response.ErrorMessage != "Succeed" : false)
+                    return BadRequest(Response);
+
                 return Ok(Response);
             }
         }
@@ -43,7 +50,11 @@ namespace GraduationProject.Controllers
             {
                 IFormFile ImmunizationsFile = new FormFile(stream, 0, stream.Length, null, Path.GetFileName(stream.Name));
 
-                var Response = _MedicalInformationService.GetAllImmunizations(ImmunizationsFile);
+                ApiResponse Response = _MedicalInformationService.GetAllImmunizations(ImmunizationsFile);
+
+                if (!string.IsNullOrEmpty(Response.ErrorMessage) ? Response.ErrorMessage != "Succeed" : false)
+                    return BadRequest(Response);
+
                 return Ok(Response);
             }
         }
@@ -56,7 +67,11 @@ namespace GraduationProject.Controllers
             {
                 IFormFile MedicinesFile = new FormFile(stream, 0, stream.Length, null, Path.GetFileName(stream.Name));
 
-                var Response = _MedicalInformationService.GetAllMedicines(MedicinesFile);
+                ApiResponse Response = _MedicalInformationService.GetAllMedicines(MedicinesFile);
+
+                if (!string.IsNullOrEmpty(Response.ErrorMessage) ? Response.ErrorMessage != "Succeed" : false)
+                    return BadRequest(Response);
+
                 return Ok(Response);
             }
         }
@@ -69,32 +84,92 @@ namespace GraduationProject.Controllers
             {
                 IFormFile SurgeriesFile = new FormFile(stream, 0, stream.Length, null, Path.GetFileName(stream.Name));
 
-                var Response = _MedicalInformationService.GetAllSurgeries(SurgeriesFile);
+                ApiResponse Response = _MedicalInformationService.GetAllSurgeries(SurgeriesFile);
+
+                if (!string.IsNullOrEmpty(Response.ErrorMessage) ? Response.ErrorMessage != "Succeed" : false)
+                    return BadRequest(Response);
+
                 return Ok(Response);
             }
         }
         [HttpPost("AddAllergies")]
         public IActionResult AddAllergies(List<AddAllergyViewModel> NewAllergies)
         {
-            var Response = _MedicalInformationService.AddAllergies(NewAllergies);
+            ApiResponse Response = _MedicalInformationService.AddAllergies(NewAllergies);
+
+            if (!string.IsNullOrEmpty(Response.ErrorMessage) ? Response.ErrorMessage != "Succeed" : false)
+                return BadRequest(Response);
+
             return Ok(Response);
         }
         [HttpPost("AddImmunizations")]
         public IActionResult AddImmunizations(List<AddImmunizationViewModel> NewImmunizations)
         {
-            var Response = _MedicalInformationService.AddImmunizations(NewImmunizations);
+            ApiResponse Response = _MedicalInformationService.AddImmunizations(NewImmunizations);
+
+            if (!string.IsNullOrEmpty(Response.ErrorMessage) ? Response.ErrorMessage != "Succeed" : false)
+                return BadRequest(Response);
+
             return Ok(Response);
         }
         [HttpPost("AddMedicines")]
         public IActionResult AddMedicines(List<AddMedicineViewModel> NewMedicines)
         {
-            var Response = _MedicalInformationService.AddMedicines(NewMedicines);
+            ApiResponse Response = _MedicalInformationService.AddMedicines(NewMedicines);
+
+            if (!string.IsNullOrEmpty(Response.ErrorMessage) ? Response.ErrorMessage != "Succeed" : false)
+                return BadRequest(Response);
+
             return Ok(Response);
         }
         [HttpPost("AddSurgeries")]
         public IActionResult AddSurgeries(List<AddSurgeryViewModel> NewSurgeries)
         {
-            var Response = _MedicalInformationService.AddSurgeries(NewSurgeries);
+            ApiResponse Response = _MedicalInformationService.AddSurgeries(NewSurgeries);
+
+            if (!string.IsNullOrEmpty(Response.ErrorMessage) ? Response.ErrorMessage != "Succeed" : false)
+                return BadRequest(Response);
+
+            return Ok(Response);
+        }
+        [HttpPost("EditAllergies")]
+        public IActionResult EditAllergies(int MedicalInfoId, List<AddAllergyViewModel> NewAllergies)
+        {
+            ApiResponse Response = _MedicalInformationService.EditAllergies(MedicalInfoId, NewAllergies);
+
+            if (!string.IsNullOrEmpty(Response.ErrorMessage) ? Response.ErrorMessage != "Succeed" : false)
+                return BadRequest(Response);
+
+            return Ok(Response);
+        }
+        [HttpPost("EditImmunizations")]
+        public IActionResult EditImmunizations(int MedicalInfoId, List<AddImmunizationViewModel> NewImmunizations)
+        {
+            ApiResponse Response = _MedicalInformationService.EditImmunizations(MedicalInfoId, NewImmunizations);
+
+            if (!string.IsNullOrEmpty(Response.ErrorMessage) ? Response.ErrorMessage != "Succeed" : false)
+                return BadRequest(Response);
+
+            return Ok(Response);
+        }
+        [HttpPost("EditMedicines")]
+        public IActionResult EditMedicines(int MedicalInfoId, List<AddMedicineViewModel> NewMedicines)
+        {
+            ApiResponse Response = _MedicalInformationService.EditMedicines(MedicalInfoId, NewMedicines);
+
+            if (!string.IsNullOrEmpty(Response.ErrorMessage) ? Response.ErrorMessage != "Succeed" : false)
+                return BadRequest(Response);
+
+            return Ok(Response);
+        }
+        [HttpPost("EditSurgeries")]
+        public IActionResult EditSurgeries(int MedicalInfoId, List<AddSurgeryViewModel> NewSurgeries)
+        {
+            ApiResponse Response = _MedicalInformationService.EditSurgeries(MedicalInfoId, NewSurgeries);
+
+            if (!string.IsNullOrEmpty(Response.ErrorMessage) ? Response.ErrorMessage != "Succeed" : false)
+                return BadRequest(Response);
+
             return Ok(Response);
         }
     }

@@ -239,42 +239,6 @@ namespace GraduationProject.Service.Services
 
             return new ApiResponse(SurgeriesOutPuts, "Succeed", SurgeriesOutPuts.Count());
         }
-        public ApiResponse AddAllergies(List<AddAllergyViewModel> NewAllergies)
-        {
-            List<Allergy> NewSergeriesEntities = _Mapper.Map<List<Allergy>>(NewAllergies);
-
-            _DbContext.Allergies.AddRange(NewSergeriesEntities);
-            _DbContext.SaveChanges();
-
-            return new ApiResponse(true, "Succeed");
-        }
-        public ApiResponse AddImmunizations(List<AddImmunizationViewModel> NewImmunizations)
-        {
-            List<Immunization> NewImmunizationsEntities = _Mapper.Map<List<Immunization>>(NewImmunizations);
-
-            _DbContext.Immunizations.AddRange(NewImmunizationsEntities);
-            _DbContext.SaveChanges();
-
-            return new ApiResponse(true, "Succeed");
-        }
-        public ApiResponse AddMedicines(List<AddMedicineViewModel> NewMedicines)
-        {
-            List<Medicine> NewMedicinesEntities = _Mapper.Map<List<Medicine>>(NewMedicines);
-
-            _DbContext.Medicines.AddRange(NewMedicinesEntities);
-            _DbContext.SaveChanges();
-
-            return new ApiResponse(true, "Succeed");
-        }
-        public ApiResponse AddSurgeries(List<AddSurgeryViewModel> NewSurgeries)
-        {
-            List<Surgery> NewSergeriesEntities = _Mapper.Map<List<Surgery>>(NewSurgeries);
-
-            _DbContext.Surgeries.AddRange(NewSergeriesEntities);
-            _DbContext.SaveChanges();
-
-            return new ApiResponse(true, "Succeed");
-        }
         public string FileConverterFuction(IFormFile file)
         {
             string fileDirectory = Directory.GetCurrentDirectory();
@@ -312,6 +276,100 @@ namespace GraduationProject.Service.Services
             }
 
             return connectionString;
+        }
+
+        public ApiResponse AddAllergies(List<AddAllergyViewModel> NewAllergies)
+        {
+            List<Allergy> NewSergeriesEntities = _Mapper.Map<List<Allergy>>(NewAllergies);
+
+            _DbContext.Allergies.AddRange(NewSergeriesEntities);
+            _DbContext.SaveChanges();
+
+            return new ApiResponse(true, "Succeed");
+        }
+        public ApiResponse AddImmunizations(List<AddImmunizationViewModel> NewImmunizations)
+        {
+            List<Immunization> NewImmunizationsEntities = _Mapper.Map<List<Immunization>>(NewImmunizations);
+
+            _DbContext.Immunizations.AddRange(NewImmunizationsEntities);
+            _DbContext.SaveChanges();
+
+            return new ApiResponse(true, "Succeed");
+        }
+        public ApiResponse AddMedicines(List<AddMedicineViewModel> NewMedicines)
+        {
+            List<Medicine> NewMedicinesEntities = _Mapper.Map<List<Medicine>>(NewMedicines);
+
+            _DbContext.Medicines.AddRange(NewMedicinesEntities);
+            _DbContext.SaveChanges();
+
+            return new ApiResponse(true, "Succeed");
+        }
+        public ApiResponse AddSurgeries(List<AddSurgeryViewModel> NewSurgeries)
+        {
+            List<Surgery> NewSergeriesEntities = _Mapper.Map<List<Surgery>>(NewSurgeries);
+
+            _DbContext.Surgeries.AddRange(NewSergeriesEntities);
+            _DbContext.SaveChanges();
+
+            return new ApiResponse(true, "Succeed");
+        }
+
+        public ApiResponse EditAllergies(int MedicalInfoId, List<AddAllergyViewModel> NewAllergies)
+        {
+            List<Allergy> OldAllergies = _DbContext.Allergies
+                .Where(x => x.MedicalInfoId == MedicalInfoId).ToList();
+
+            foreach (Allergy OldAllergy in OldAllergies)
+            {
+                OldAllergy.IsDeleted = true;
+            }
+
+            _DbContext.SaveChanges();
+
+            return AddAllergies(NewAllergies);
+        }
+        public ApiResponse EditImmunizations(int MedicalInfoId, List<AddImmunizationViewModel> NewImmunizations)
+        {
+            List<Immunization> OldImmunizations = _DbContext.Immunizations
+                .Where(x => x.MedicalInfoId == MedicalInfoId).ToList();
+
+            foreach (Immunization OldAllergy in OldImmunizations)
+            {
+                OldAllergy.IsDeleted = true;
+            }
+
+            _DbContext.SaveChanges();
+
+            return AddImmunizations(NewImmunizations);
+        }
+        public ApiResponse EditMedicines(int MedicalInfoId, List<AddMedicineViewModel> NewMedicines)
+        {
+            List<Medicine> OldMedicines = _DbContext.Medicines
+                .Where(x => x.MedicalInfoId == MedicalInfoId).ToList();
+
+            foreach (Medicine OldAllergy in OldMedicines)
+            {
+                OldAllergy.IsDeleted = true;
+            }
+
+            _DbContext.SaveChanges();
+
+            return AddMedicines(NewMedicines);
+        }
+        public ApiResponse EditSurgeries(int MedicalInfoId, List<AddSurgeryViewModel> NewSurgeries)
+        {
+            List<Surgery> OldSurgeries = _DbContext.Surgeries
+                .Where(x => x.MedicalInfoId == MedicalInfoId).ToList();
+
+            foreach (Surgery OldAllergy in OldSurgeries)
+            {
+                OldAllergy.IsDeleted = true;
+            }
+
+            _DbContext.SaveChanges();
+
+            return AddSurgeries(NewSurgeries);
         }
     }
 }
