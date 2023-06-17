@@ -72,7 +72,7 @@ namespace GraduationProject.Service.Services
         public ApiResponse GetPatientById(int PatientId)
         {
             Patient? PatientEntity = _DbContext.Patients.Include(x => x.User)
-                .FirstOrDefault(x => x.Id == PatientId);
+                .FirstOrDefault(x => x.UserId == PatientId);
 
             if (PatientEntity == null)
                 return new ApiResponse(false, $"No Patient Found With This Id: ({PatientId})");
