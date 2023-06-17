@@ -33,6 +33,7 @@ builder.Services.AddScoped<IClinicService, ClinicService>();
 builder.Services.AddScoped<IWorking_DaysService, Working_DaysService>();
 builder.Services.AddScoped<IMedicalInformationService, MedicalInformationService>();
 builder.Services.AddScoped<IMyClinicService, MyClinicService>();
+builder.Services.AddScoped<IAppointmentService, AppointmentService>();
 builder.Services.AddDateOnlyTimeOnlyStringConverters();
 builder.Services.AddSwaggerGen(c => c.UseDateOnlyTimeOnlyStringConverters());
 
