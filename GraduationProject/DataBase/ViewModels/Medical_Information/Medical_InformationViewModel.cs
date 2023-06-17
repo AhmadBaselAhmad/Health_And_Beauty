@@ -1,4 +1,8 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using GraduationProject.DataBase.ViewModels.Allergies;
+using GraduationProject.DataBase.ViewModels.Immunization;
+using GraduationProject.DataBase.ViewModels.Medicine;
+using GraduationProject.DataBase.ViewModels.Surgery;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace GraduationProject.DataBase.ViewModels.Medical_Information
 {

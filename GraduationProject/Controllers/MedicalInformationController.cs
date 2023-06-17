@@ -172,5 +172,45 @@ namespace GraduationProject.Controllers
 
             return Ok(Response);
         }
+        [HttpGet("GetOldAllergies")]
+        public IActionResult GetOldAllergies(int MedicalInfoId)
+        {
+            ApiResponse Response = _MedicalInformationService.GetOldAllergies(MedicalInfoId);
+
+            if (!string.IsNullOrEmpty(Response.ErrorMessage) ? Response.ErrorMessage != "Succeed" : false)
+                return BadRequest(Response);
+
+            return Ok(Response);
+        }
+        [HttpGet("GetOldImmunizations")]
+        public IActionResult GetOldImmunizations(int MedicalInfoId)
+        {
+            ApiResponse Response = _MedicalInformationService.GetOldImmunizations(MedicalInfoId);
+
+            if (!string.IsNullOrEmpty(Response.ErrorMessage) ? Response.ErrorMessage != "Succeed" : false)
+                return BadRequest(Response);
+
+            return Ok(Response);
+        }
+        [HttpGet("GetOldMedicines")]
+        public IActionResult GetOldMedicines(int MedicalInfoId)
+        {
+            ApiResponse Response = _MedicalInformationService.GetOldMedicines(MedicalInfoId);
+
+            if (!string.IsNullOrEmpty(Response.ErrorMessage) ? Response.ErrorMessage != "Succeed" : false)
+                return BadRequest(Response);
+
+            return Ok(Response);
+        }
+        [HttpGet("GetOldSurgeries")]
+        public IActionResult GetOldSurgeries(int MedicalInfoId)
+        {
+            ApiResponse Response = _MedicalInformationService.GetOldSurgeries(MedicalInfoId);
+
+            if (!string.IsNullOrEmpty(Response.ErrorMessage) ? Response.ErrorMessage != "Succeed" : false)
+                return BadRequest(Response);
+
+            return Ok(Response);
+        }
     }
 }

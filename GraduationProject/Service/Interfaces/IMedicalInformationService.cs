@@ -20,5 +20,9 @@ namespace GraduationProject.Service.Interfaces
         ApiResponse EditImmunizations(int MedicalInfoId, List<AddImmunizationViewModel> NewImmunizations);
         ApiResponse EditMedicines(int MedicalInfoId, List<AddMedicineViewModel> NewMedicines);
         ApiResponse EditSurgeries(int MedicalInfoId, List<AddSurgeryViewModel> NewSurgeries);
+        ApiResponse GetOldAllergies(int MedicalInfoId);
+        ApiResponse GetOldImmunizations(int MedicalInfoId);
+        ApiResponse GetOldMedicines(int MedicalInfoId);
+        ApiResponse GetOldSurgeries(int MedicalInfoId);
     }
 }

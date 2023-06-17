@@ -43,5 +43,15 @@ namespace GraduationProject.Controllers
 
             return Ok(Response);
         }
+        [HttpPut("ChangeAppointmentStatus")]
+        public IActionResult ChangeAppointmentStatus(int AppointmentId, string NewAppointmentStatus)
+        {
+            ApiResponse Response = _AppointmentService.ChangeAppointmentStatus(AppointmentId, NewAppointmentStatus);
+
+            if (!string.IsNullOrEmpty(Response.ErrorMessage) ? Response.ErrorMessage != "Succeed" : false)
+                return BadRequest(Response);
+
+            return Ok(Response);
+        }
     }
 }

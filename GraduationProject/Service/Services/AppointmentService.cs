@@ -86,5 +86,18 @@ namespace GraduationProject.Service.Services
 
             return new ApiResponse(AppointmentsViewModel, "Succeed", Count);
         }
+        public ApiResponse ChangeAppointmentStatus(int AppointmentId, string NewAppointmentStatus)
+        {
+            Appointment? AppointmentEntity = _DbContext.Appointments
+                .FirstOrDefault(x => x.Id == AppointmentId);
+
+            if (AppointmentEntity == null)
+                return new ApiResponse(false, $"No Appointment Found With This Id: ({AppointmentId})");
+
+            AppointmentEntity.Status = NewAppointmentStatus;
+            _DbContext.SaveChanges();
+
+            return new ApiResponse(true, "Succeed");
+        }
     }
 }

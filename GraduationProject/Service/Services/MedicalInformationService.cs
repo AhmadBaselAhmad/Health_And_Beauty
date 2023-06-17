@@ -144,7 +144,7 @@ namespace GraduationProject.Service.Services
             DataTable DataTableInstance = new DataTable();
             string FileConverter = FileConverterFuction(File);
 
-            OleDbDataAdapter MedicineInformation = new OleDbDataAdapter("SELECT * FROM [Medicine$]", FileConverter);
+            OleDbDataAdapter MedicineInformation = new OleDbDataAdapter("SELECT * FROM [Medicines$]", FileConverter);
             DataSet Medicines = new DataSet();
 
             MedicineInformation.Fill(Medicines, "ExcelTable");
@@ -370,6 +370,35 @@ namespace GraduationProject.Service.Services
             _DbContext.SaveChanges();
 
             return AddSurgeries(NewSurgeries);
+        }
+
+        public ApiResponse GetOldAllergies(int MedicalInfoId)
+        {
+            List<GetPatientAllergiesViewModel> OldAllergies = _Mapper.Map<List<GetPatientAllergiesViewModel>>(_DbContext.Allergies
+                .Where(x => x.MedicalInfoId == MedicalInfoId).ToList());
+
+            return new ApiResponse(OldAllergies, "Succeed");
+        }
+        public ApiResponse GetOldImmunizations(int MedicalInfoId)
+        {
+            List<GetPatientImmunizationViewModel> OldImmunizations = _Mapper.Map<List<GetPatientImmunizationViewModel>>(_DbContext.Immunizations
+                .Where(x => x.MedicalInfoId == MedicalInfoId).ToList());
+
+            return new ApiResponse(OldImmunizations, "Succeed");
+        }
+        public ApiResponse GetOldMedicines(int MedicalInfoId)
+        {
+            List<GetPatientMedicinesViewModel> OldMedicines = _Mapper.Map<List<GetPatientMedicinesViewModel>>(_DbContext.Medicines
+                .Where(x => x.MedicalInfoId == MedicalInfoId).ToList());
+
+            return new ApiResponse(OldMedicines, "Succeed");
+        }
+        public ApiResponse GetOldSurgeries(int MedicalInfoId)
+        {
+            List<GetPatientSurgeriesViewModel> OldSurgeries = _Mapper.Map<List<GetPatientSurgeriesViewModel>>(_DbContext.Surgeries
+                .Where(x => x.MedicalInfoId == MedicalInfoId).ToList());
+
+            return new ApiResponse(OldSurgeries, "Succeed");
         }
     }
 }

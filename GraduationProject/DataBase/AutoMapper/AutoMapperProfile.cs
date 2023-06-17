@@ -98,17 +98,21 @@ namespace GraduationProject.DataBase.AutoMapper
                 .ForMember(c => c.Service_Name, c => c.MapFrom(f => f.Service.Name))
                 .ForMember(c => c.Patient_Name, c => c.MapFrom(f => f.Patient.User.Name));
 
-            // Surgery..
-            CreateMap<Surgery, AddSurgeryViewModel>().ReverseMap();
-
             // Allergy..
             CreateMap<Allergy, AddAllergyViewModel>().ReverseMap();
+            CreateMap<Allergy, GetPatientAllergiesViewModel>().ReverseMap();
 
             // Immunization..
             CreateMap<Immunization, AddImmunizationViewModel>().ReverseMap();
+            CreateMap<Immunization, GetPatientImmunizationViewModel>().ReverseMap();
 
             // Medicine..
             CreateMap<Medicine, AddMedicineViewModel>().ReverseMap();
+            CreateMap<Medicine, GetPatientMedicinesViewModel>().ReverseMap();
+
+            // Surgery..
+            CreateMap<Surgery, AddSurgeryViewModel>().ReverseMap();
+            CreateMap<Surgery, GetPatientSurgeriesViewModel>().ReverseMap();
         }
     }
 }
