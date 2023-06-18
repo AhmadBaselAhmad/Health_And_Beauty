@@ -96,7 +96,9 @@ namespace GraduationProject.DataBase.AutoMapper
             // Appointment..
             CreateMap<Appointment, AppointmentViewModel>()
                 .ForMember(c => c.Service_Name, c => c.MapFrom(f => f.Service.Name))
-                .ForMember(c => c.Patient_Name, c => c.MapFrom(f => f.Patient.User.Name));
+                .ForMember(c => c.Patient_Name, c => c.MapFrom(f => f.Patient.User.Name))
+                .ForMember(c => c.Patient_FirstName, c => c.MapFrom(f => f.Patient.User.First_Name))
+                .ForMember(c => c.Patient_LastName, c => c.MapFrom(f => f.Patient.User.Last_Name));
 
             // Allergy..
             CreateMap<Allergy, AddAllergyViewModel>().ReverseMap();

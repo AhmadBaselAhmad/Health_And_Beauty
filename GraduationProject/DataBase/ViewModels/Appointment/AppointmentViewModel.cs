@@ -8,6 +8,8 @@ namespace GraduationProject.DataBase.ViewModels.Appointment
 
         public int PatientId { get; set; }
         public string? Patient_Name { get; set; }
+        public string? Patient_FirstName { get; set; }
+        public string? Patient_LastName { get; set; }
 
         public int DoctorId { get; set; }
 
