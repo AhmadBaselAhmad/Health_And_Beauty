@@ -79,6 +79,9 @@ namespace GraduationProject.Service.Services
 
             PatientViewModel PatientViewModel = _Mapper.Map<PatientViewModel>(PatientEntity);
 
+            PatientViewModel.VisitCount = _DbContext.Appointments
+                .Where(x => x.PatientId == PatientViewModel.Id && x.Status == ((int)Constants.AppointmentStatus.complete).ToString()).Count();
+
             return new ApiResponse(PatientViewModel, "Succeed");
         }
         public ApiResponse GetAllDoctorsPatients(int UserId, ComplexFilter Filter)
@@ -92,6 +95,12 @@ namespace GraduationProject.Service.Services
                 .Include(x => x.Patient).Include(x => x.Patient.User)
                 .Where(x => x.DoctorId == DoctorEntity.Id)
                 .Select(x => x.Patient).ToList());
+
+            foreach (PatientViewModel Patient in Patients)
+            {
+                Patient.VisitCount = _DbContext.Appointments
+                    .Where(x => x.PatientId == Patient.Id && x.Status == ((int)Constants.AppointmentStatus.complete).ToString()).Count();
+            }
 
             int Count = Patients.Count();
 

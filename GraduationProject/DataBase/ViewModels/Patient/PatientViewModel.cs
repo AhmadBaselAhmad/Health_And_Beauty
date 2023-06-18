@@ -9,7 +9,7 @@ namespace GraduationProject.DataBase.ViewModels.Patient
         public DateTime Birthdate { get; set; }
         public string Gender { get; set; }
         public string Address { get; set; }
-
+        public int VisitCount { get; set; }
         public UserViewModel UserInformation { get; set; }
     }
 }

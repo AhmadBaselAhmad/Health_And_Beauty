@@ -29,7 +29,9 @@ namespace GraduationProject.Service.Services
                 return new ApiResponse(false, $"No Doctor Found With This User Id: ({UserId})");
 
             List<AppointmentViewModel> AppointmentsViewModel = _Mapper.Map<List<AppointmentViewModel>>(_DbContext.Appointments
-                .Include(x => x.Service).Include(x => x.Patient).ThenInclude(x => x.User)
+                .Include(x => x.Service)
+                .Include(x => x.Patient)
+                .Include(x => x.Patient.User)
                 .Where(x => x.DoctorId == DoctorEntity.Id && x.Status.ToLower() == AppointmentStatus.ToLower()).ToList());
 
             int Count = AppointmentsViewModel.Count();

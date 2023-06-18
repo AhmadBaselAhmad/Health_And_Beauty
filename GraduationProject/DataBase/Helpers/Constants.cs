@@ -9,5 +9,11 @@
             SuperAdmin,
             ClinicAdmin
         }
+        public enum AppointmentStatus
+        {
+            pending = 0,
+            complete = 1,
+            cancel = 2
+        }
     }
 }
