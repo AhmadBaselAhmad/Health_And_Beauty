@@ -212,5 +212,25 @@ namespace GraduationProject.Controllers
 
             return Ok(Response);
         }
+        [HttpGet("GetAllBGroups")]
+        public IActionResult GetAllBGroups()
+        {
+            ApiResponse Response = _MedicalInformationService.GetAllBGroups();
+
+            if (!string.IsNullOrEmpty(Response.ErrorMessage) ? Response.ErrorMessage != "Succeed" : false)
+                return BadRequest(Response);
+
+            return Ok(Response);
+        }
+        [HttpGet("GetAllDiet")]
+        public IActionResult GetAllDiet()
+        {
+            ApiResponse Response = _MedicalInformationService.GetAllDiet();
+
+            if (!string.IsNullOrEmpty(Response.ErrorMessage) ? Response.ErrorMessage != "Succeed" : false)
+                return BadRequest(Response);
+
+            return Ok(Response);
+        }
     }
 }

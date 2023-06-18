@@ -24,5 +24,7 @@ namespace GraduationProject.Service.Interfaces
         ApiResponse GetOldImmunizations(int MedicalInfoId);
         ApiResponse GetOldMedicines(int MedicalInfoId);
         ApiResponse GetOldSurgeries(int MedicalInfoId);
+        ApiResponse GetAllBGroups();
+        ApiResponse GetAllDiet();
     }
 }

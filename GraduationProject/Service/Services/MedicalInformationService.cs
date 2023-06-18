@@ -4,6 +4,7 @@ using GraduationProject.DataBase.Helpers;
 using GraduationProject.DataBase.Models;
 using GraduationProject.DataBase.ViewModels.Allergies;
 using GraduationProject.DataBase.ViewModels.Immunization;
+using GraduationProject.DataBase.ViewModels.Medical_Information;
 using GraduationProject.DataBase.ViewModels.Medicine;
 using GraduationProject.DataBase.ViewModels.Surgery;
 using GraduationProject.Service.Interfaces;
@@ -13,6 +14,7 @@ using System.Data;
 using System.Data.OleDb;
 using System.Drawing;
 using System.Globalization;
+using System.Xml.Linq;
 using LicenseContext = OfficeOpenXml.LicenseContext;
 
 namespace GraduationProject.Service.Services
@@ -399,6 +401,38 @@ namespace GraduationProject.Service.Services
                 .Where(x => x.MedicalInfoId == MedicalInfoId).ToList());
 
             return new ApiResponse(OldSurgeries, "Succeed");
+        }
+
+        public ApiResponse GetAllBGroups()
+        {
+            List<BGroupsViewModel> BGroups = new List<BGroupsViewModel>()
+            {
+                new BGroupsViewModel("A+"),
+                new BGroupsViewModel("B+"),
+                new BGroupsViewModel("O+"),
+                new BGroupsViewModel("AB+"),
+
+                new BGroupsViewModel("A-"),
+                new BGroupsViewModel("B-"),
+                new BGroupsViewModel("O-"),
+                new BGroupsViewModel("AB-")
+            };
+
+            return new ApiResponse(BGroups, "Succeed");
+        }
+        public ApiResponse GetAllDiet()
+        {
+            List<DietViewModel> Diets = new List<DietViewModel>()
+            {
+                new DietViewModel("Vegetarian"),
+                new DietViewModel("Vegan"),
+                new DietViewModel("Paleo"),
+                new DietViewModel("Keto"),
+                new DietViewModel("Gluten-Free"),
+                new DietViewModel("Normal")
+            };
+
+            return new ApiResponse(Diets, "Succeed");
         }
     }
 }
