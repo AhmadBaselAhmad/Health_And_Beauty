@@ -68,6 +68,16 @@ namespace GraduationProject.Service.Services
                 _DbContext.Doctors.Add(DoctorInfo);
                 _DbContext.SaveChanges();
 
+                List<Doctor_Working_Hour> Doctor_Working_Hours = _Mapper.Map<List<Doctor_Working_Hour>>(NewDoctor.Doctor_Working_Hours);
+
+                foreach (Doctor_Working_Hour Doctor_Working_Hour in Doctor_Working_Hours)
+                {
+                    Doctor_Working_Hour.DoctorId = DoctorInfo.Id;
+                }
+
+                _DbContext.Doctor_Working_Hours.AddRange(Doctor_Working_Hours);
+                _DbContext.SaveChanges();
+
                 Transaction.Complete();
 
                 return new ApiResponse(true, "Succeed");

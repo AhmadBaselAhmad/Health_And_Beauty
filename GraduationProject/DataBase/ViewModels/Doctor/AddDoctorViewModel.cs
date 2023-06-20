@@ -16,5 +16,6 @@ namespace GraduationProject.DataBase.ViewModels.Doctor
         public AddUserViewModel UserInfo { get; set; }
 
         public int ClinicId { get; set; }
+        public List<AddDoctor_Working_HourViewModel> Doctor_Working_Hours { get; set; }
     }
 }

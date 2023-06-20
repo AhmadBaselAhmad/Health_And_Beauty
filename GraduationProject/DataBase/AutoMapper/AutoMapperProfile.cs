@@ -90,6 +90,7 @@ namespace GraduationProject.DataBase.AutoMapper
             CreateMap<Models.Service, AddClinicServiceViewModel>().ReverseMap();
 
             // Doctor_Working_Hours..
+            CreateMap<Doctor_Working_Hour, AddDoctor_Working_HourViewModel>().ReverseMap();
             CreateMap<Doctor_Working_Hour, Doctor_Working_HourViewModel>()
                 .ForMember(c => c.WorkingDays_Name, c => c.MapFrom(f => f.WorkingDays.Day));
 
