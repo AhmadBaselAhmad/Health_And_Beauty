@@ -160,7 +160,7 @@ namespace GraduationProject.Service.Services
             DoctorUser.Name = DoctorNewData.Name;
 
             List<Doctor_Working_Hour> DoctorWorkingHourEntities = _DbContext.Doctor_Working_Hours
-                .Where(x => x.DoctorId == DoctorNewData.Id).ToList();
+                .Where(x => x.DoctorId == DoctorUser.Id).ToList();
 
             foreach (Doctor_Working_Hour DoctorWorkingHourEntity in DoctorWorkingHourEntities)
             {
