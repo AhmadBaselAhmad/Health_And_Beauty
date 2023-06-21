@@ -191,7 +191,7 @@ namespace GraduationProject.Service.Services
 
             DoctorViewModel.Doctor_Working_Hours = _Mapper.Map<List<Doctor_Working_HourViewModel>>(_DbContext.Doctor_Working_Hours
                 .Include(x => x.WorkingDays)
-                .Where(x => x.DoctorId == Doctor.Id).ToList());
+                .Where(x => x.DoctorId == Doctor.UserId).ToList());
 
             return new ApiResponse(DoctorViewModel, "Succeed");
         }
