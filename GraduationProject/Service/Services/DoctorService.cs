@@ -72,7 +72,7 @@ namespace GraduationProject.Service.Services
 
                 foreach (Doctor_Working_Hour Doctor_Working_Hour in Doctor_Working_Hours)
                 {
-                    Doctor_Working_Hour.DoctorId = DoctorInfo.Id;
+                    Doctor_Working_Hour.DoctorId = DoctorInfo.UserId;
                 }
 
                 _DbContext.Doctor_Working_Hours.AddRange(Doctor_Working_Hours);
