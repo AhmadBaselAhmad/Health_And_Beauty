@@ -386,7 +386,6 @@ namespace GraduationProject.Service.Services
             if (CheckDynamicAttributeKeyIfDuplicate)
                 return new ApiResponse(false, $"This Dynamic Attribute's Key: ({EditDynamicAttribute.Key}) is Already Exist in This Clinic");
 
-            DynamicAttributeEntity.DefaultValue = EditDynamicAttribute.DefaultValue;
             DynamicAttributeEntity.Key = EditDynamicAttribute.Key;
             DynamicAttributeEntity.Description = EditDynamicAttribute.Description;
 
