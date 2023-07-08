@@ -25,11 +25,11 @@ namespace GraduationProject.DataBase.ViewModels.DynamicAttribute
         // General Validation..
         //
 
-        public AddGeneralValidationViewModel GeneralValidation { get; set; }
+        public AddGeneralValidationViewModel? GeneralValidation { get; set; }
 
         //
         // Dependency Full Information..
         //
-        public AddFullDependencyInfoViewModel Dependency { get; set; }
+        public AddFullDependencyInfoViewModel? Dependency { get; set; }
     }
 }

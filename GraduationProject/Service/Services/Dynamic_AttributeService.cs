@@ -103,15 +103,18 @@ namespace GraduationProject.Service.Services
                 _DbContext.SaveChanges();
 
                 // General Validation..
-                Validation NewValidationEntity = _Mapper.Map<Validation>(NewDynamicAttribute.GeneralValidation);
+                if (NewDynamicAttribute.GeneralValidation != null)
+                {
+                    Validation NewValidationEntity = _Mapper.Map<Validation>(NewDynamicAttribute.GeneralValidation);
 
-                NewValidationEntity.DynamicAttributeId = NewNewDynamicAttributeEntity.Id;
+                    NewValidationEntity.DynamicAttributeId = NewNewDynamicAttributeEntity.Id;
 
-                _DbContext.Validations.Add(NewValidationEntity);
-                _DbContext.SaveChanges();
+                    _DbContext.Validations.Add(NewValidationEntity);
+                    _DbContext.SaveChanges();
+                }
 
                 // Dependency Information..
-                if (NewDynamicAttribute.Dependency.DependencyGroupsRules != null)
+                if (NewDynamicAttribute.Dependency != null)
                 {
                     // Get All Static And Dynamic Attributes..
                     List<Static_Attribute> AllStaticAttributes = _DbContext.Static_Attributes.ToList();
