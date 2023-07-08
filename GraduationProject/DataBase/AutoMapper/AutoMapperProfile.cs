@@ -6,6 +6,8 @@ using GraduationProject.DataBase.ViewModels.Clinic;
 using GraduationProject.DataBase.ViewModels.Doctor;
 using GraduationProject.DataBase.ViewModels.Doctor_Working_Hour;
 using GraduationProject.DataBase.ViewModels.DynamicAttribute;
+using GraduationProject.DataBase.ViewModels.DynamicAttribute.Dependency;
+using GraduationProject.DataBase.ViewModels.DynamicAttribute.GeneralValidation;
 using GraduationProject.DataBase.ViewModels.Immunization;
 using GraduationProject.DataBase.ViewModels.Medical_Information;
 using GraduationProject.DataBase.ViewModels.Medicine;
@@ -47,10 +49,19 @@ namespace GraduationProject.DataBase.AutoMapper
             CreateMap<Doctor, EditDoctorViewModel>().ReverseMap();
 
             // Dynamic Attribute..
-            CreateMap<AddDependencyInstViewModel, Dynamic_AttributeViewModel>().ReverseMap();
+            CreateMap<Dynamic_Attribute, AddDynamic_AttributeViewModel>().ReverseMap();
             CreateMap<Dynamic_Attribute, Dynamic_AttributeViewModel>()
                 .ForMember(c => c.Clinic_Name, c => c.MapFrom(s => s.Clinic.Name))
                 .ForMember(c => c.DataType_Name, c => c.MapFrom(s => s.DataType.Name));
+
+            // General Validation..
+            CreateMap<Validation, AddGeneralValidationViewModel>().ReverseMap();
+
+            // Rule..
+            CreateMap<Rule, AddDependencyGroupsRules>().ReverseMap();
+
+            // Dependency..
+            CreateMap<Dependency, AddDependencyValidationViewModel>().ReverseMap();
 
             // Medical Information..
             CreateMap<Medical_Information, Medical_InformationViewModel>()

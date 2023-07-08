@@ -22,5 +22,12 @@ namespace GraduationProject.DataBase.Helpers
             [Description("A+ B+ O+ AB+ A- B- O- AB-")]
             BGroups
         }
+        public enum DataTypes
+        {
+            Date,
+            Number,
+            Boolean,
+            Text
+        }
     }
 }

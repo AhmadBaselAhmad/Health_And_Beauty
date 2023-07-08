@@ -3,9 +3,8 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace GraduationProject.DataBase.Models
 {
-    public class Dependency: TimeStampModel
+    public class Dependency : TimeStampModel
     {
-
         public int Id { get; set; }
 
         public int DynamicAttributeId { get; set; }

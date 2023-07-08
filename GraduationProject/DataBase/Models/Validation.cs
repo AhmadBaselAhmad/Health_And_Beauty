@@ -5,13 +5,12 @@ namespace GraduationProject.DataBase.Models
 {
     public class Validation : TimeStampModel
     {
-
         public int Id { get; set; }
 
         public int DynamicAttributeId { get; set; }
         [ForeignKey("DynamicAttributeId")]
-        public Medical_Information? DynamicAttribute { get; set; }
-        
+        public Dynamic_Attribute? DynamicAttribute { get; set; }
+
         public int OperationId { get; set; }
         [ForeignKey("OperationId")]
         public Operation? Operation { get; set; }

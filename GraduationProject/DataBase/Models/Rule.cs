@@ -5,7 +5,6 @@ namespace GraduationProject.DataBase.Models
 {
     public class Rule : TimeStampModel
     {
-
         public int Id { get; set; }
 
         public int? StaticAttributeId { get; set; }
@@ -15,7 +14,11 @@ namespace GraduationProject.DataBase.Models
         public int? DynamicAttributeId { get; set; }
         [ForeignKey("DynamicAttributeId")]
         public Dynamic_Attribute? DynamicAttribute { get; set; }
-        
+
+        public int NewDynamicAttributeId { get; set; }
+        [ForeignKey("NewDynamicAttributeId")]
+        public Dynamic_Attribute? NewDynamicAttribute { get; set; }
+
         public int OperationId { get; set; }
         [ForeignKey("OperationId")]
         public Operation? Operation { get; set; }
