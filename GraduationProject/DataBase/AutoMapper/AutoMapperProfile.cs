@@ -50,6 +50,10 @@ namespace GraduationProject.DataBase.AutoMapper
 
             // Dynamic Attribute..
             CreateMap<Dynamic_Attribute, AddDynamic_AttributeViewModel>().ReverseMap();
+            CreateMap<Dynamic_Attribute, DependencyColumnsViewModel>()
+                .ForMember(c => c.DynamicAttributeId, c => c.MapFrom(s => s.Id))
+                .ForMember(c => c.AttributeName, c => c.MapFrom(s => s.Key))
+                .ForMember(c => c.DataType, c => c.MapFrom(s => s.DataType.Name));
             CreateMap<Dynamic_Attribute, Dynamic_AttributeViewModel>()
                 .ForMember(c => c.Clinic_Name, c => c.MapFrom(s => s.Clinic.Name))
                 .ForMember(c => c.DataType_Name, c => c.MapFrom(s => s.DataType.Name));
@@ -127,6 +131,12 @@ namespace GraduationProject.DataBase.AutoMapper
             // Surgery..
             CreateMap<Surgery, AddSurgeryViewModel>().ReverseMap();
             CreateMap<Surgery, GetPatientSurgeriesViewModel>().ReverseMap();
+
+            // Static Attributes..
+            CreateMap<Static_Attribute, DependencyColumnsViewModel>()
+                .ForMember(c => c.StaticAttributeId, c => c.MapFrom(s => s.Id))
+                .ForMember(c => c.AttributeName, c => c.MapFrom(s => s.Label))
+                .ForMember(c => c.DataType, c => c.MapFrom(s => s.DataType.Name));
         }
     }
 }

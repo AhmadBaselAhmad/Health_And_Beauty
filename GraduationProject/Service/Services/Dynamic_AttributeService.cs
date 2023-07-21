@@ -435,5 +435,40 @@ namespace GraduationProject.Service.Services
 
             return new ApiResponse(true, "Succeed");
         }
+        public ApiResponse GetAllDependencyColumns(int ClinicId, string? SearchQuery)
+        {
+            if (string.IsNullOrEmpty(SearchQuery))
+            {
+                List<DependencyColumnsViewModel> OutPut = new List<DependencyColumnsViewModel>();
+
+                List<DependencyColumnsViewModel> DynamicAttributes = _Mapper.Map<List<DependencyColumnsViewModel>>(_DbContext.Dynamic_Attributes
+                    .Include(x => x.DataType)
+                    .Where(x => x.ClinicId == ClinicId && !x.IsDeleted && !x.Disable).ToList());
+
+                List<DependencyColumnsViewModel> StaticAttribute = _Mapper.Map<List<DependencyColumnsViewModel>>(_DbContext.Static_Attributes
+                    .Include(x => x.DataType)
+                    .Where(x => x.ClinicId == ClinicId && !x.IsDeleted && x.Enable).ToList());
+
+                OutPut = DynamicAttributes.Concat(StaticAttribute).ToList();
+
+                return new ApiResponse(OutPut, "Succeed");
+            }
+            else
+            {
+                List<DependencyColumnsViewModel> OutPut = new List<DependencyColumnsViewModel>();
+
+                List<DependencyColumnsViewModel> DynamicAttributes = _Mapper.Map<List<DependencyColumnsViewModel>>(_DbContext.Dynamic_Attributes
+                    .Include(x => x.DataType)
+                    .Where(x => x.ClinicId == ClinicId && !x.IsDeleted && !x.Disable && x.Key.ToLower().StartsWith(SearchQuery.ToLower())).ToList());
+
+                List<DependencyColumnsViewModel> StaticAttribute = _Mapper.Map<List<DependencyColumnsViewModel>>(_DbContext.Static_Attributes
+                    .Include(x => x.DataType)
+                    .Where(x => x.ClinicId == ClinicId && !x.IsDeleted && x.Enable && x.Label.ToLower().StartsWith(SearchQuery.ToLower())).ToList());
+
+                OutPut = DynamicAttributes.Concat(StaticAttribute).ToList();
+
+                return new ApiResponse(OutPut, "Succeed");
+            }
+        }
     }
 }

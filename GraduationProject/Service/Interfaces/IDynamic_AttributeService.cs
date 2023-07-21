@@ -14,5 +14,6 @@ namespace GraduationProject.Service.Interfaces
         ApiResponse ChangeDynamicAttributeRequiredStatus(int DynmaicAttributeId);
         ApiResponse ChangeDynamicAttributeDisableStatus(int DynmaicAttributeId);
         ApiResponse ChangeDynamicAttributeHealthStandardStatus(int DynmaicAttributeId);
+        ApiResponse GetAllDependencyColumns(int ClinicId, string? SearchQuery);
     }
 }

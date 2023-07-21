@@ -3,6 +3,7 @@ using GraduationProject.DataBase.Context;
 using GraduationProject.DataBase.Helpers;
 using GraduationProject.DataBase.Models;
 using GraduationProject.DataBase.ViewModels.Doctor;
+using GraduationProject.DataBase.ViewModels.DynamicAttribute.Dependency;
 using GraduationProject.DataBase.ViewModels.Medical_Information;
 using GraduationProject.DataBase.ViewModels.Patient;
 using GraduationProject.Service.Interfaces;

@@ -2,6 +2,7 @@
 using GraduationProject.DataBase.ViewModels.Doctor;
 using GraduationProject.DataBase.ViewModels.DynamicAttribute;
 using GraduationProject.Service.Interfaces;
+using GraduationProject.Service.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.IdentityModel.Tokens.Jwt;
@@ -113,6 +114,21 @@ namespace GraduationProject.Controllers
         public IActionResult ChangeDynamicAttributeHealthStandardStatus(int DynmaicAttributeId)
         {
             ApiResponse? Response = _Dynamic_AttributeService.ChangeDynamicAttributeHealthStandardStatus(DynmaicAttributeId);
+
+            if (!string.IsNullOrEmpty(Response.ErrorMessage) ? Response.ErrorMessage != "Succeed" : false)
+                return BadRequest(Response);
+
+            return Ok(Response);
+        }
+        [HttpGet("GetAllDependencyColumns")]
+        public IActionResult GetAllDependencyColumns(string? SearchQuery)
+        {
+            JwtSecurityTokenHandler JWTHandler = new JwtSecurityTokenHandler();
+
+            int ClinicId = Convert.ToInt32(JWTHandler.ReadJwtToken(_HttpContextAccessor.HttpContext
+                .Request.Headers["Authorization"].ToString().Split(" ")[1]).Claims.ToList()[4].Value);
+
+            ApiResponse? Response = _Dynamic_AttributeService.GetAllDependencyColumns(ClinicId, SearchQuery);
 
             if (!string.IsNullOrEmpty(Response.ErrorMessage) ? Response.ErrorMessage != "Succeed" : false)
                 return BadRequest(Response);
