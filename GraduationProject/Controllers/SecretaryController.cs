@@ -4,6 +4,7 @@ using GraduationProject.Service.Interfaces;
 using GraduationProject.Service.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.IdentityModel.Tokens.Jwt;
 
 namespace GraduationProject.Controllers
 {
@@ -12,9 +13,11 @@ namespace GraduationProject.Controllers
     public class SecretaryController : ControllerBase
     {
         private ISecretaryService _SecretaryService;
-        public SecretaryController(ISecretaryService SecretaryService)
+        private readonly IHttpContextAccessor _HttpContextAccessor;
+        public SecretaryController(ISecretaryService SecretaryService, IHttpContextAccessor HttpContextAccessor)
         {
             _SecretaryService = SecretaryService;
+            _HttpContextAccessor = HttpContextAccessor;
         }
         [HttpGet("GetSecretaryById")]
         public IActionResult GetSecretaryById(int SecretaryId)
@@ -60,6 +63,31 @@ namespace GraduationProject.Controllers
         public IActionResult GetAllSecretaries(int ClinicId, ComplexFilter Filter)
         {
             ApiResponse? Response = _SecretaryService.GetAllSecretaries(ClinicId, Filter);
+
+            if (!string.IsNullOrEmpty(Response.ErrorMessage) ? Response.ErrorMessage != "Succeed" : false)
+                return BadRequest(Response);
+
+            return Ok(Response);
+        }
+        [HttpPost("GetAllDoctorsByClinicId")]
+        public IActionResult GetAllDoctorsByClinicId()
+        {
+            JwtSecurityTokenHandler JWTHandler = new JwtSecurityTokenHandler();
+
+            int ClinicId = Convert.ToInt32(JWTHandler.ReadJwtToken(_HttpContextAccessor.HttpContext
+                .Request.Headers["Authorization"].ToString().Split(" ")[1]).Claims.ToList()[4].Value);
+
+            ApiResponse? Response = _SecretaryService.GetAllDoctorsByClinicId(ClinicId);
+
+            if (!string.IsNullOrEmpty(Response.ErrorMessage) ? Response.ErrorMessage != "Succeed" : false)
+                return BadRequest(Response);
+
+            return Ok(Response);
+        }
+        [HttpPost("EditSecretary")]
+        public IActionResult EditSecretary(EditSecretaryViewModel SecretaryNewData)
+        {
+            ApiResponse? Response = _SecretaryService.EditSecretary(SecretaryNewData);
 
             if (!string.IsNullOrEmpty(Response.ErrorMessage) ? Response.ErrorMessage != "Succeed" : false)
                 return BadRequest(Response);

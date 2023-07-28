@@ -3,8 +3,10 @@ using GraduationProject.DataBase.Context;
 using GraduationProject.DataBase.Helpers;
 using GraduationProject.DataBase.Models;
 using GraduationProject.DataBase.ViewModels.Doctor;
+using GraduationProject.DataBase.ViewModels.Doctor_Working_Hour;
 using GraduationProject.DataBase.ViewModels.Patient;
 using GraduationProject.DataBase.ViewModels.Secretary;
+using GraduationProject.DataBase.ViewModels.Secretary_Working_Hour;
 using GraduationProject.Service.Interfaces;
 using Microsoft.AspNetCore.Cryptography.KeyDerivation;
 using Microsoft.EntityFrameworkCore;
@@ -32,6 +34,10 @@ namespace GraduationProject.Service.Services
                 return new ApiResponse(false, $"No Secretary Found With This Id: ({SecretaryId})");
 
             AllSecretaryDataViewModel SecretaryViewModel = _Mapper.Map<AllSecretaryDataViewModel>(SecretaryEntity);
+
+            SecretaryViewModel.Secretary_Working_Hours = _Mapper.Map<List<Secretary_Working_HourViewModel>>(_DbContext.Secretary_Working_Hours
+                .Include(x => x.WorkingDays).Include(x => x.Secretary)
+                .Where(x => x.SecretaryId == SecretaryEntity.UserId).ToList());
 
             return new ApiResponse(SecretaryViewModel, "Succeed");
         }
@@ -95,6 +101,16 @@ namespace GraduationProject.Service.Services
                 _DbContext.Secretaries.Add(SecretaryInfo);
                 _DbContext.SaveChanges();
 
+                List<Secretary_Working_Hour> Secretary_Working_Hours = _Mapper.Map<List<Secretary_Working_Hour>>(NewSecretary.Secretary_Working_Hours);
+
+                foreach (Secretary_Working_Hour Secretary_Working_Hour in Secretary_Working_Hours)
+                {
+                    Secretary_Working_Hour.SecretaryId = SecretaryInfo.UserId;
+                }
+
+                _DbContext.Secretary_Working_Hours.AddRange(Secretary_Working_Hours);
+                _DbContext.SaveChanges();
+
                 Transaction.Complete();
 
                 return new ApiResponse(true, "Succeed");
@@ -144,6 +160,65 @@ namespace GraduationProject.Service.Services
 
                 return new ApiResponse(Secretaries, "Succeed", Count);
             }
+        }
+        public ApiResponse GetAllDoctorsByClinicId(int ClinicId)
+        {
+            List<DoctorViewModel> Doctors = _Mapper.Map<List<DoctorViewModel>>(_DbContext.Doctors
+                .Where(x => x.ClinicId == ClinicId).ToList());
+
+            return new ApiResponse(Doctors, "Succeed", Doctors.Count());
+        }
+        public ApiResponse EditSecretary(EditSecretaryViewModel SecretaryNewData)
+        {
+            Secretary? OldSecretaryData = _DbContext.Secretaries.FirstOrDefault(x => x.Id == SecretaryNewData.Id);
+
+            if (OldSecretaryData == null)
+                return new ApiResponse(false, $"No Secretary Found With This Id: {SecretaryNewData.Id}");
+
+            User? SecretaryUser = _DbContext.Users
+                .FirstOrDefault(x => x.Id == OldSecretaryData.UserId);
+
+            if (SecretaryUser == null)
+                return new ApiResponse(false, $"No User Found With This Id: {OldSecretaryData.UserId}");
+
+            bool CheckUserNameIfAlreadyExit = _DbContext.Users
+                .Any(x => x.Name.ToLower() == SecretaryNewData.User_Name.ToLower());
+
+            if (CheckUserNameIfAlreadyExit)
+                return new ApiResponse(false, $"This User Name: {SecretaryNewData.User_Name} is Already Used");
+
+            bool CheckEmailIfAlreadyExit = _DbContext.Users
+                .Any(x => x.Email.ToLower() == SecretaryNewData.Email.ToLower());
+
+            if (CheckEmailIfAlreadyExit)
+                return new ApiResponse(false, $"This Email: {SecretaryNewData.Email} is Already Used");
+
+            SecretaryUser.Telephone_Number = SecretaryNewData.Telephone_Number;
+            SecretaryUser.Phone_Number = SecretaryNewData.Phone_Number;
+            SecretaryUser.Last_Name = SecretaryNewData.Last_Name;
+            SecretaryUser.First_Name = SecretaryNewData.First_Name;
+            SecretaryUser.Email = SecretaryNewData.Email;
+            SecretaryUser.Name = SecretaryNewData.User_Name;
+
+            List<Secretary_Working_Hour> SecretaryWorkingHourEntities = _DbContext.Secretary_Working_Hours
+                .Where(x => x.SecretaryId == SecretaryUser.Id).ToList();
+
+            foreach (Secretary_Working_Hour SecretaryWorkingHourEntity in SecretaryWorkingHourEntities)
+            {
+                Secretary_Working_HourViewModel? NewDoctorWorkingHours = SecretaryNewData.Secretary_Working_Hours.
+                    FirstOrDefault(x => x.Id == SecretaryWorkingHourEntity.Id);
+
+                if (NewDoctorWorkingHours != null)
+                {
+                    SecretaryWorkingHourEntity.From = NewDoctorWorkingHours.From;
+                    SecretaryWorkingHourEntity.To = NewDoctorWorkingHours.To;
+                    SecretaryWorkingHourEntity.Off = NewDoctorWorkingHours.Off;
+                }
+            }
+
+            _DbContext.SaveChanges();
+
+            return new ApiResponse(true, "Succeed");
         }
     }
 }

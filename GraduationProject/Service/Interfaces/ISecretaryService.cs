@@ -10,5 +10,7 @@ namespace GraduationProject.Service.Interfaces
         ApiResponse AddNewSecretary(AddSecreataryViewModel NewSecretary);
         ApiResponse EditClinicSecretary(int SecretaryId, int NewClinicId);
         ApiResponse GetAllSecretaries(int ClinicId, ComplexFilter Filter);
+        ApiResponse GetAllDoctorsByClinicId(int ClinicId);
+        ApiResponse EditSecretary(EditSecretaryViewModel SecretaryNewData);
     }
 }
