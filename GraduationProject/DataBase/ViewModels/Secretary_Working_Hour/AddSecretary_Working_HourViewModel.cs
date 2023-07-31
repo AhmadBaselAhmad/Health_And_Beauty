@@ -2,7 +2,6 @@
 {
     public class AddSecretary_Working_HourViewModel
     {
-        public int SecretaryId { get; set; }
         public int WorkingDaysId { get; set; }
         public DateTime From { get; set; }
         public DateTime To { get; set; }
