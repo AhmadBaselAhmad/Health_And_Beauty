@@ -10,8 +10,8 @@
         public int WorkingDaysId { get; set; }
         public string WorkingDays_Name { get; set; }
 
-        public DateTime From { get; set; }
-        public DateTime To { get; set; }
+        public TimeOnly From { get; set; }
+        public TimeOnly To { get; set; }
         public bool Off { get; set; }
     }
 }
