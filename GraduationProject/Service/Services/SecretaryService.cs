@@ -41,18 +41,6 @@ namespace GraduationProject.Service.Services
 
             SecretaryViewModel.Secretary_Working_Hours = _Mapper.Map<List<Secretary_Working_HourViewModel>>(Secretary_Working_HoursEntities);
 
-            foreach (Secretary_Working_HourViewModel Secretary_Working_Hours in SecretaryViewModel.Secretary_Working_Hours)
-            {
-                Secretary_Working_Hour? Secretary_Working_HourEntity = Secretary_Working_HoursEntities
-                    .FirstOrDefault(x => x.WorkingDaysId == Secretary_Working_Hours.WorkingDaysId);
-
-                if (Secretary_Working_HourEntity != null)
-                {
-                    Secretary_Working_Hours.From = TimeOnly.FromDateTime(Secretary_Working_HourEntity.From);
-                    Secretary_Working_Hours.To = TimeOnly.FromDateTime(Secretary_Working_HourEntity.To);
-                }
-            }
-
             return new ApiResponse(SecretaryViewModel, "Succeed");
         }
         public ApiResponse DeleteSecreatry(int SecretaryId)
@@ -119,19 +107,7 @@ namespace GraduationProject.Service.Services
 
                 foreach (Secretary_Working_Hour Secretary_Working_Hour in Secretary_Working_Hours)
                 {
-                    AddSecretary_Working_HourViewModel? AddSecretaryWorkingHourViewModel = NewSecretary.Secretary_Working_Hours
-                        .FirstOrDefault(x => x.WorkingDaysId == Secretary_Working_Hour.WorkingDaysId);
-
-                    if (AddSecretaryWorkingHourViewModel != null)
-                    {
-                        Secretary_Working_Hour.From = new DateTime(0, 0, 0, AddSecretaryWorkingHourViewModel.From.Hour, AddSecretaryWorkingHourViewModel.From.Minute,
-                            AddSecretaryWorkingHourViewModel.From.Second, AddSecretaryWorkingHourViewModel.From.Millisecond);
-
-                        Secretary_Working_Hour.To = new DateTime(0, 0, 0, AddSecretaryWorkingHourViewModel.To.Hour, AddSecretaryWorkingHourViewModel.To.Minute,
-                            AddSecretaryWorkingHourViewModel.To.Second, AddSecretaryWorkingHourViewModel.To.Millisecond);
-
-                        Secretary_Working_Hour.SecretaryId = SecretaryInfo.UserId;
-                    }
+                    Secretary_Working_Hour.SecretaryId = SecretaryInfo.UserId;
                 }
 
                 _DbContext.Secretary_Working_Hours.AddRange(Secretary_Working_Hours);
@@ -228,23 +204,6 @@ namespace GraduationProject.Service.Services
 
             List<Secretary_Working_Hour> SecretaryWorkingHourEntities = _DbContext.Secretary_Working_Hours
                 .Where(x => x.SecretaryId == SecretaryUser.Id).ToList();
-
-            foreach (Secretary_Working_Hour SecretaryWorkingHourEntity in SecretaryWorkingHourEntities)
-            {
-                Secretary_Working_HourViewModel? NewDoctorWorkingHours = SecretaryNewData.Secretary_Working_Hours.
-                    FirstOrDefault(x => x.Id == SecretaryWorkingHourEntity.Id);
-
-                if (NewDoctorWorkingHours != null)
-                {
-                    SecretaryWorkingHourEntity.From = new DateTime(0, 0, 0, NewDoctorWorkingHours.From.Hour, NewDoctorWorkingHours.From.Minute,
-                        NewDoctorWorkingHours.From.Second, NewDoctorWorkingHours.From.Millisecond);
-
-                    SecretaryWorkingHourEntity.To = new DateTime(0, 0, 0, NewDoctorWorkingHours.To.Hour, NewDoctorWorkingHours.To.Minute,
-                        NewDoctorWorkingHours.To.Second, NewDoctorWorkingHours.To.Millisecond);
-
-                    SecretaryWorkingHourEntity.Off = NewDoctorWorkingHours.Off;
-                }
-            }
 
             _DbContext.SaveChanges();
 

@@ -15,8 +15,8 @@ namespace GraduationProject.DataBase.Models
         [ForeignKey("WorkingDaysId")]
         public Working_Day? WorkingDays { get; set; }
 
-        public DateTime From { get; set; }
-        public DateTime To { get; set; }
+        public TimeOnly From { get; set; }
+        public TimeOnly To { get; set; }
         public bool Off { get; set; }
     }
 }
