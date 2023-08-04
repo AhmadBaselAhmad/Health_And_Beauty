@@ -185,7 +185,7 @@ namespace GraduationProject.Service.Services
                 .FirstOrDefault(x => x.UserId == UserId);
 
             if (Doctor == null)
-                return new ApiResponse(false, $"No Doctor Found With This Id: {UserId}");
+                return new ApiResponse(false, $"No Doctor Found With This User Id: {UserId}");
 
             DoctorViewModel DoctorViewModel = _Mapper.Map<DoctorViewModel>(Doctor);
 

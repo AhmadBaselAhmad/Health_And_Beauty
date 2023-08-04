@@ -24,14 +24,14 @@ namespace GraduationProject.Service.Services
             _DbContext = DbContext;
             _Mapper = Mapper;
         }
-        public ApiResponse GetSecretaryById(int SecretaryId)
+        public ApiResponse GetSecretaryById(int UserId)
         {
             Secretary? SecretaryEntity = _DbContext.Secretaries
                 .Include(x => x.User).Include(x => x.Clinic)
-                .FirstOrDefault(x => x.Id == SecretaryId);
+                .FirstOrDefault(x => x.UserId == UserId);
 
             if (SecretaryEntity == null)
-                return new ApiResponse(false, $"No Secretary Found With This Id: ({SecretaryId})");
+                return new ApiResponse(false, $"No Secretary Found With This User Id: ({UserId})");
 
             AllSecretaryDataViewModel SecretaryViewModel = _Mapper.Map<AllSecretaryDataViewModel>(SecretaryEntity);
 
@@ -166,6 +166,7 @@ namespace GraduationProject.Service.Services
         public ApiResponse GetAllDoctorsByClinicId(int ClinicId)
         {
             List<DoctorViewModel> Doctors = _Mapper.Map<List<DoctorViewModel>>(_DbContext.Doctors
+                .Include(x => x.User).Include(x => x.Clinic)
                 .Where(x => x.ClinicId == ClinicId).ToList());
 
             return new ApiResponse(Doctors, "Succeed", Doctors.Count());
