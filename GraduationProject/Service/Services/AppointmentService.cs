@@ -28,11 +28,25 @@ namespace GraduationProject.Service.Services
             if (DoctorEntity == null)
                 return new ApiResponse(false, $"No Doctor Found With This User Id: ({UserId})");
 
-            List<AppointmentViewModel> AppointmentsViewModel = _Mapper.Map<List<AppointmentViewModel>>(_DbContext.Appointments
-                .Include(x => x.Service)
-                .Include(x => x.Patient)
-                .Include(x => x.Patient.User)
-                .Where(x => x.DoctorId == DoctorEntity.Id && x.Status.ToLower() == AppointmentStatus.ToLower()).ToList());
+            List<AppointmentViewModel> AppointmentsViewModel = new List<AppointmentViewModel>();
+
+            if (!string.IsNullOrEmpty(Filter.SearchQuery))
+            {
+                AppointmentsViewModel = _Mapper.Map<List<AppointmentViewModel>>(_DbContext.Appointments
+                    .Include(x => x.Service)
+                    .Include(x => x.Patient)
+                    .Include(x => x.Patient.User)
+                    .Where(x => x.DoctorId == DoctorEntity.Id && x.Status.ToLower() == AppointmentStatus.ToLower() &&
+                        x.Patient.User.Name.ToLower().StartsWith(Filter.SearchQuery)).ToList());
+            }
+            else
+            {
+                AppointmentsViewModel = _Mapper.Map<List<AppointmentViewModel>>(_DbContext.Appointments
+                    .Include(x => x.Service)
+                    .Include(x => x.Patient)
+                    .Include(x => x.Patient.User)
+                    .Where(x => x.DoctorId == DoctorEntity.Id && x.Status.ToLower() == AppointmentStatus.ToLower()).ToList());
+            }
 
             int Count = AppointmentsViewModel.Count();
 
@@ -63,9 +77,21 @@ namespace GraduationProject.Service.Services
             if (DoctorEntity == null)
                 return new ApiResponse(false, $"No Doctor Found With This User Id: ({DoctorId})");
 
-            List<AppointmentViewModel> AppointmentsViewModel = _Mapper.Map<List<AppointmentViewModel>>(_DbContext.Appointments
-                .Include(x => x.Service).Include(x => x.Patient).ThenInclude(x => x.User)
-                .Where(x => x.DoctorId == DoctorEntity.Id && x.Status.ToLower() == AppointmentStatus.ToLower()).ToList());
+            List<AppointmentViewModel> AppointmentsViewModel = new List<AppointmentViewModel>();
+
+            if (!string.IsNullOrEmpty(Filter.SearchQuery))
+            {
+                AppointmentsViewModel = _Mapper.Map<List<AppointmentViewModel>>(_DbContext.Appointments
+                    .Include(x => x.Service).Include(x => x.Patient).ThenInclude(x => x.User)
+                    .Where(x => x.DoctorId == DoctorEntity.Id && x.Status.ToLower() == AppointmentStatus.ToLower() &&
+                        x.Patient.User.Name.ToLower().StartsWith(Filter.SearchQuery.ToLower())).ToList());
+            }
+            else
+            {
+                AppointmentsViewModel = _Mapper.Map<List<AppointmentViewModel>>(_DbContext.Appointments
+                    .Include(x => x.Service).Include(x => x.Patient).ThenInclude(x => x.User)
+                    .Where(x => x.DoctorId == DoctorEntity.Id && x.Status.ToLower() == AppointmentStatus.ToLower()).ToList());
+            }
 
             int Count = AppointmentsViewModel.Count();
 
