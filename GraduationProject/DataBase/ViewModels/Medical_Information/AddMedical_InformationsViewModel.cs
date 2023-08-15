@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using GraduationProject.DataBase.ViewModels.DynamicAttributeValue;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace GraduationProject.DataBase.ViewModels.Medical_Information
 {
@@ -12,5 +13,6 @@ namespace GraduationProject.DataBase.ViewModels.Medical_Information
         public string BPressure { get; set; }
         public string Respiration { get; set; }
         public string Diet { get; set; }
+        public List<AddDynamicAttributeValue> DynamicAttributesValues { get; set; }
     }
 }

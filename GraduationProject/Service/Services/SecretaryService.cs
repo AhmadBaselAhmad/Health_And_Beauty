@@ -185,13 +185,13 @@ namespace GraduationProject.Service.Services
                 return new ApiResponse(false, $"No User Found With This Id: {OldSecretaryData.UserId}");
 
             bool CheckUserNameIfAlreadyExit = _DbContext.Users
-                .Any(x => x.Name.ToLower() == SecretaryNewData.User_Name.ToLower());
+                .Any(x => x.Name.ToLower() == SecretaryNewData.User_Name.ToLower() && x.Id != SecretaryNewData.Id);
 
             if (CheckUserNameIfAlreadyExit)
                 return new ApiResponse(false, $"This User Name: {SecretaryNewData.User_Name} is Already Used");
 
             bool CheckEmailIfAlreadyExit = _DbContext.Users
-                .Any(x => x.Email.ToLower() == SecretaryNewData.Email.ToLower());
+                .Any(x => x.Email.ToLower() == SecretaryNewData.Email.ToLower() && x.Id != SecretaryNewData.Id);
 
             if (CheckEmailIfAlreadyExit)
                 return new ApiResponse(false, $"This Email: {SecretaryNewData.Email} is Already Used");

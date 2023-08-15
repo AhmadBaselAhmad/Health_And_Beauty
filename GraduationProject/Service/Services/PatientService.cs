@@ -35,6 +35,21 @@ namespace GraduationProject.Service.Services
             _DbContext.Medical_Informations.Add(PatientMedical_InformationEntity);
             _DbContext.SaveChanges();
 
+            List<Dynamic_Attribute> DynamicAttributes = _DbContext.Dynamic_Attributes
+                .Where(x => !x.IsDeleted && !x.Disable).ToList();
+
+            foreach (Dynamic_Attribute DynamicAttribute in DynamicAttributes)
+            {
+                var Dependencies = _DbContext.Dependency_Rows.Where(x => !x.IsDeleted && x.Dependency.DynamicAttributeId == DynamicAttribute.Id)
+                    .GroupBy(x => x.RowId).ToList();
+
+                foreach (var Dependency in Dependencies)
+                {
+                    // var xx = Dependency.Where(x =>)
+                }
+            }
+
+
             return new ApiResponse(true, "Succeed");
         }
         public ApiResponse EditPatientMedicalInfo(EditMedical_InformationsViewModel PatientMedicalInformationViewModel)
