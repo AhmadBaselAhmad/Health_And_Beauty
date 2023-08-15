@@ -141,13 +141,13 @@ namespace GraduationProject.Service.Services
                 return new ApiResponse(false, $"No User Found With This Id: {OldDoctorData.UserId}");
 
             bool CheckUserNameIfAlreadyExit = _DbContext.Users
-                .Any(x => x.Name.ToLower() == DoctorNewData.Name.ToLower() && x.Id != DoctorNewData.Id);
+                .Any(x => x.Name.ToLower() == DoctorNewData.Name.ToLower() && x.Id != OldDoctorData.UserId);
 
             if (CheckUserNameIfAlreadyExit)
                 return new ApiResponse(false, $"This User Name: {DoctorNewData.Name} is Already Used");
 
             bool CheckEmailIfAlreadyExit = _DbContext.Users
-                .Any(x => x.Email.ToLower() == DoctorNewData.Email.ToLower() && x.Id != DoctorNewData.Id);
+                .Any(x => x.Email.ToLower() == DoctorNewData.Email.ToLower() && x.Id != OldDoctorData.UserId);
 
             if (CheckEmailIfAlreadyExit)
                 return new ApiResponse(false, $"This Email: {DoctorNewData.Email} is Already Used");
