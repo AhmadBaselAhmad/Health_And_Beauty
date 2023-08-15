@@ -546,7 +546,7 @@ namespace GraduationProject.Service.Services
                 .Include(x => x.Patient).FirstOrDefault(x => x.PatientId == PatientId);
 
             if (Medical_InformationEntity == null)
-                return new ApiResponse(false, $"No Patient Found With This Id: ({PatientId})");
+                return new ApiResponse(new Medical_InformationViewModel(), "Succeed");
 
             Medical_InformationViewModel PatientMedicalInformation = _Mapper.Map<Medical_InformationViewModel>(Medical_InformationEntity);
 
