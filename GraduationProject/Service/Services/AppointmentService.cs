@@ -70,6 +70,18 @@ namespace GraduationProject.Service.Services
                 AppointmentsViewModel = AppointmentsViewModel.Skip((Filter.PageIndex - 1) * Filter.PageSize)
                     .Take(Filter.PageSize).ToList();
 
+            foreach (AppointmentViewModel AppointmentViewModel in AppointmentsViewModel)
+            {
+                Medical_Information? PatientMedicalInfo = _DbContext.Medical_Informations
+                    .FirstOrDefault(x => x.Patient.Name.ToLower() == AppointmentViewModel.Patient_Name.ToLower());
+
+                if (PatientMedicalInfo != null)
+                    AppointmentViewModel.MedicalInfoId = PatientMedicalInfo.Id;
+
+                else
+                    AppointmentViewModel.MedicalInfoId = null;
+            }
+
             return new ApiResponse(AppointmentsViewModel, "Succeed", Count);
         }
         public ApiResponse GetAllAppointmentsForSecretaryRole(int DoctorId, string AppointmentStatus, ComplexFilter Filter)
@@ -114,6 +126,18 @@ namespace GraduationProject.Service.Services
             else
                 AppointmentsViewModel = AppointmentsViewModel.Skip((Filter.PageIndex - 1) * Filter.PageSize)
                     .Take(Filter.PageSize).ToList();
+
+            foreach (AppointmentViewModel AppointmentViewModel in AppointmentsViewModel)
+            {
+                Medical_Information? PatientMedicalInfo = _DbContext.Medical_Informations
+                    .FirstOrDefault(x => x.Patient.Name.ToLower() == AppointmentViewModel.Patient_Name.ToLower());
+
+                if (PatientMedicalInfo != null)
+                    AppointmentViewModel.MedicalInfoId = PatientMedicalInfo.Id;
+
+                else
+                    AppointmentViewModel.MedicalInfoId = null;
+            }
 
             return new ApiResponse(AppointmentsViewModel, "Succeed", Count);
         }

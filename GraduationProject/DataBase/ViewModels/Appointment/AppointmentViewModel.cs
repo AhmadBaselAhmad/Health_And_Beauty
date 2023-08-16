@@ -10,7 +10,7 @@ namespace GraduationProject.DataBase.ViewModels.Appointment
         public string? Patient_Name { get; set; }
         public string? Patient_FirstName { get; set; }
         public string? Patient_LastName { get; set; }
-
+        public int? MedicalInfoId { get; set; }
         public int DoctorId { get; set; }
 
         public int ServiceId { get; set; }
