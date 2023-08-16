@@ -1,4 +1,6 @@
-﻿namespace GraduationProject.DataBase.ViewModels.Medical_Information
+﻿using GraduationProject.DataBase.ViewModels.DynamicAttributeValue;
+
+namespace GraduationProject.DataBase.ViewModels.Medical_Information
 {
     public class EditMedical_InformationsViewModel
     {
@@ -10,5 +12,6 @@
         public string BPressure { get; set; }
         public string Respiration { get; set; }
         public string Diet { get; set; }
+        public List<AddDynamicAttributeValue> DynamicAttributesValues { get; set; }
     }
 }

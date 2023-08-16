@@ -1,5 +1,6 @@
 ﻿using GraduationProject.DataBase.Helpers;
 using GraduationProject.DataBase.Models;
+using GraduationProject.DataBase.ViewModels.Prescription;
 using GraduationProject.Service.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -47,6 +48,26 @@ namespace GraduationProject.Controllers
         public IActionResult ChangeAppointmentStatus(int AppointmentId, string NewAppointmentStatus)
         {
             ApiResponse Response = _AppointmentService.ChangeAppointmentStatus(AppointmentId, NewAppointmentStatus);
+
+            if (!string.IsNullOrEmpty(Response.ErrorMessage) ? Response.ErrorMessage != "Succeed" : false)
+                return BadRequest(Response);
+
+            return Ok(Response);
+        }
+        [HttpPost("AddPrescription")]
+        public IActionResult AddPrescription(AddPrescriptionViewModel NewPrescription)
+        {
+            ApiResponse Response = _AppointmentService.AddPrescription(NewPrescription);
+
+            if (!string.IsNullOrEmpty(Response.ErrorMessage) ? Response.ErrorMessage != "Succeed" : false)
+                return BadRequest(Response);
+
+            return Ok(Response);
+        }
+        [HttpPatch("EditPrescription")]
+        public IActionResult EditPrescription(EditPrescriptionViewModel NewPrescriptionData)
+        {
+            ApiResponse Response = _AppointmentService.EditPrescription(NewPrescriptionData);
 
             if (!string.IsNullOrEmpty(Response.ErrorMessage) ? Response.ErrorMessage != "Succeed" : false)
                 return BadRequest(Response);

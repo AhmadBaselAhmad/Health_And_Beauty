@@ -4,10 +4,13 @@ using GraduationProject.DataBase.Helpers;
 using GraduationProject.DataBase.Models;
 using GraduationProject.DataBase.ViewModels.Appointment;
 using GraduationProject.DataBase.ViewModels.Doctor;
+using GraduationProject.DataBase.ViewModels.Medicine;
+using GraduationProject.DataBase.ViewModels.Prescription;
 using GraduationProject.DataBase.ViewModels.Secretary;
 using GraduationProject.Service.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;
+using System.Transactions;
 
 namespace GraduationProject.Service.Services
 {
@@ -123,6 +126,41 @@ namespace GraduationProject.Service.Services
                 return new ApiResponse(false, $"No Appointment Found With This Id: ({AppointmentId})");
 
             AppointmentEntity.Status = NewAppointmentStatus;
+            _DbContext.SaveChanges();
+
+            return new ApiResponse(true, "Succeed");
+        }
+        public ApiResponse AddPrescription(AddPrescriptionViewModel NewPrescription)
+        {
+            using (TransactionScope transaction = new TransactionScope())
+            {
+                Prescription NewPrescriptionEntity = _Mapper.Map<Prescription>(NewPrescription);
+
+                _DbContext.Prescriptions.Add(NewPrescriptionEntity);
+                _DbContext.SaveChanges();
+
+                List<Medicine> MedicinesEntities = _Mapper.Map<List<Medicine>>(NewPrescription.Medicines);
+
+                foreach (Medicine Medicine in MedicinesEntities)
+                {
+                    Medicine.PrescriptionId = NewPrescriptionEntity.Id;
+                    Medicine.MedicalInfoId = NewPrescriptionEntity.MedicalInfoId;
+                    Medicine.IsDeleted = false;
+                }
+
+                _DbContext.Medicines.AddRange(MedicinesEntities);
+                _DbContext.SaveChanges();
+
+                transaction.Complete();
+
+                return new ApiResponse(true, "Succeed");
+            }
+        }
+        public ApiResponse EditPrescription(EditPrescriptionViewModel NewPrescriptionData)
+        {
+            Prescription NewPrescriptionEntity = _Mapper.Map<Prescription>(NewPrescriptionData);
+
+            _DbContext.Prescriptions.Add(NewPrescriptionEntity);
             _DbContext.SaveChanges();
 
             return new ApiResponse(true, "Succeed");

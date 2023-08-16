@@ -5,7 +5,6 @@ namespace GraduationProject.DataBase.Models
 {
     public class Prescription : TimeStampModel
     {
-
         public int Id { get; set; }
 
         public int AppointmentId { get; set; }
@@ -18,6 +17,5 @@ namespace GraduationProject.DataBase.Models
         public int MedicalInfoId { get; set; }
         [ForeignKey("MedicalInfoId")]
         public Medical_Information? MedicalInfo { get; set; }
-
     }
 }

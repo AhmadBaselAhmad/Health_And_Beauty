@@ -12,6 +12,7 @@ using GraduationProject.DataBase.ViewModels.Immunization;
 using GraduationProject.DataBase.ViewModels.Medical_Information;
 using GraduationProject.DataBase.ViewModels.Medicine;
 using GraduationProject.DataBase.ViewModels.Patient;
+using GraduationProject.DataBase.ViewModels.Prescription;
 using GraduationProject.DataBase.ViewModels.Secretary;
 using GraduationProject.DataBase.ViewModels.Secretary_Working_Hour;
 using GraduationProject.DataBase.ViewModels.Service;
@@ -144,6 +145,10 @@ namespace GraduationProject.DataBase.AutoMapper
                 .ForMember(c => c.Secretary_Name, c => c.MapFrom(s => s.Secretary.Name))
                 .ForMember(c => c.WorkingDays_Name, c => c.MapFrom(s => s.WorkingDays.Day));
             CreateMap<Secretary_Working_Hour, AddSecretary_Working_HourViewModel>().ReverseMap();
+
+            // Prescription
+            CreateMap<Prescription, AddPrescriptionViewModel>().ReverseMap();
+            CreateMap<Prescription, EditPrescriptionViewModel>().ReverseMap();
         }
     }
 }
