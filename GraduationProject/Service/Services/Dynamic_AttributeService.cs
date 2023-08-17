@@ -6,6 +6,7 @@ using GraduationProject.DataBase.ViewModels.Doctor;
 using GraduationProject.DataBase.ViewModels.DynamicAttribute;
 using GraduationProject.DataBase.ViewModels.DynamicAttribute.Dependency;
 using GraduationProject.DataBase.ViewModels.Patient;
+using GraduationProject.DataBase.ViewModels.User;
 using GraduationProject.Service.Interfaces;
 using Microsoft.AspNetCore.Rewrite;
 using Microsoft.EntityFrameworkCore;
@@ -88,11 +89,90 @@ namespace GraduationProject.Service.Services
         {
             using (TransactionScope Transaction = new TransactionScope())
             {
+                List<PatientWithMedicalInfo> PatientsFullData = new List<PatientWithMedicalInfo>();
+
                 // Get All The Patients in This Clinic For Adding The Default Value OR The Dependency Value To Them..
                 List<PatientViewModel> AllClinicPatients = _Mapper.Map<List<PatientViewModel>>(_DbContext.Appointments
                     .Include(x => x.Doctor).Include(x => x.Patient)
                     .Where(x => x.Doctor.ClinicId == NewDynamicAttribute.ClinicId)
                     .Select(x => x.Patient).ToList());
+
+                List<Medical_Information> MedicalInformationFullData = _DbContext.Medical_Informations
+                    .Where(x => AllClinicPatients.Exists(y => y.UserInformation.Id == x.PatientId)).ToList();
+
+                List<Medicine> MedicinesFullData = _DbContext.Medicines.Where(x => MedicalInformationFullData
+                    .Exists(y => y.Id == x.MedicalInfoId)).ToList();
+
+                foreach (PatientViewModel Patient in AllClinicPatients)
+                {
+                    Medical_Information? MedicalInfo = MedicalInformationFullData
+                        .FirstOrDefault(x => x.PatientId == Patient.UserInformation.Id);
+
+                    if (MedicalInfo != null)
+                    {
+                        Medicine? MedicineInfo = MedicinesFullData
+                            .FirstOrDefault(x => x.MedicalInfoId == MedicalInfo.Id);
+
+                        if (MedicineInfo != null)
+                        {
+                            PatientWithMedicalInfo OnePatientFullData = new PatientWithMedicalInfo()
+                            {
+                                Id = Patient.Id,
+                                Birthdate = Patient.Birthdate,
+                                Gender = Patient.Gender,
+                                Address = Patient.Address,
+                                VisitCount = Patient.VisitCount,
+                                UserId = Patient.UserInformation.Id,
+                                Name = Patient.UserInformation.Name,
+                                First_Name = Patient.UserInformation.First_Name,
+                                Last_Name = Patient.UserInformation.Last_Name,
+                                Phone_Number = Patient.UserInformation.Phone_Number,
+                                Telephone_Number = Patient.UserInformation.Telephone_Number,
+                                Email = Patient.UserInformation.Email,
+                                Medical_InfoId = MedicalInfo.Id,
+                                Height = MedicalInfo.Height,
+                                BGroup = MedicalInfo.BGroup,
+                                Pulse = MedicalInfo.Pulse,
+                                Weight = MedicalInfo.Weight,
+                                BPressure = MedicalInfo.BPressure,
+                                Respiration = MedicalInfo.Respiration,
+                                Diet = MedicalInfo.Diet,
+                                MedicineName = MedicineInfo.Name,
+                                MedicineDescription = MedicineInfo.Description
+                            };
+
+                            PatientsFullData.Add(OnePatientFullData);
+                        }
+                        else
+                        {
+                            PatientWithMedicalInfo OnePatientFullData = new PatientWithMedicalInfo()
+                            {
+                                Id = Patient.Id,
+                                Birthdate = Patient.Birthdate,
+                                Gender = Patient.Gender,
+                                Address = Patient.Address,
+                                VisitCount = Patient.VisitCount,
+                                UserId = Patient.UserInformation.Id,
+                                Name = Patient.UserInformation.Name,
+                                First_Name = Patient.UserInformation.First_Name,
+                                Last_Name = Patient.UserInformation.Last_Name,
+                                Phone_Number = Patient.UserInformation.Phone_Number,
+                                Telephone_Number = Patient.UserInformation.Telephone_Number,
+                                Email = Patient.UserInformation.Email,
+                                Medical_InfoId = MedicalInfo.Id,
+                                Height = MedicalInfo.Height,
+                                BGroup = MedicalInfo.BGroup,
+                                Pulse = MedicalInfo.Pulse,
+                                Weight = MedicalInfo.Weight,
+                                BPressure = MedicalInfo.BPressure,
+                                Respiration = MedicalInfo.Respiration,
+                                Diet = MedicalInfo.Diet
+                            };
+
+                            PatientsFullData.Add(OnePatientFullData);
+                        }
+                    }
+                }
 
                 // General Information..
                 Dynamic_Attribute NewNewDynamicAttributeEntity = _Mapper.Map<Dynamic_Attribute>(NewDynamicAttribute);
@@ -157,7 +237,7 @@ namespace GraduationProject.Service.Services
                             {
                                 if (DependencySingleGroupSingleRule.OperationValueBoolean != null)
                                 {
-                                    CopyOfAllClinicPatients = CopyOfAllClinicPatients.Where(x => bool.Parse(x.GetType()
+                                    PatientsFullData = PatientsFullData.Where(x => bool.Parse(x.GetType()
                                         .GetProperty(DependencySingleGroupSingleRule.StaticAttributeId != null ?
                                             AllStaticAttributes.FirstOrDefault(StaticAttribute => StaticAttribute.Id == DependencySingleGroupSingleRule.StaticAttributeId).Key :
                                             AllDynamicAttributes.FirstOrDefault(DynamicAttribute => DynamicAttribute.Id == DependencySingleGroupSingleRule.DynamicAttributeId).Key)
@@ -165,7 +245,7 @@ namespace GraduationProject.Service.Services
                                 }
                                 else if (DependencySingleGroupSingleRule.OperationValueDateTime != null)
                                 {
-                                    CopyOfAllClinicPatients = CopyOfAllClinicPatients.Where(x => DateTime.Parse(x.GetType()
+                                    PatientsFullData = PatientsFullData.Where(x => DateTime.Parse(x.GetType()
                                         .GetProperty(DependencySingleGroupSingleRule.StaticAttributeId != null ?
                                             AllStaticAttributes.FirstOrDefault(StaticAttribute => StaticAttribute.Id == DependencySingleGroupSingleRule.StaticAttributeId).Key :
                                             AllDynamicAttributes.FirstOrDefault(DynamicAttribute => DynamicAttribute.Id == DependencySingleGroupSingleRule.DynamicAttributeId).Key)
@@ -173,7 +253,7 @@ namespace GraduationProject.Service.Services
                                 }
                                 else if (DependencySingleGroupSingleRule.OperationValueDouble != null)
                                 {
-                                    CopyOfAllClinicPatients = CopyOfAllClinicPatients.Where(x => double.Parse(x.GetType()
+                                    PatientsFullData = PatientsFullData.Where(x => double.Parse(x.GetType()
                                         .GetProperty(DependencySingleGroupSingleRule.StaticAttributeId != null ?
                                             AllStaticAttributes.FirstOrDefault(StaticAttribute => StaticAttribute.Id == DependencySingleGroupSingleRule.StaticAttributeId).Key :
                                             AllDynamicAttributes.FirstOrDefault(DynamicAttribute => DynamicAttribute.Id == DependencySingleGroupSingleRule.DynamicAttributeId).Key)
@@ -181,7 +261,7 @@ namespace GraduationProject.Service.Services
                                 }
                                 else if (DependencySingleGroupSingleRule.OperationValueString != null)
                                 {
-                                    CopyOfAllClinicPatients = CopyOfAllClinicPatients.Where(x => x.GetType()
+                                    PatientsFullData = PatientsFullData.Where(x => x.GetType()
                                         .GetProperty(DependencySingleGroupSingleRule.StaticAttributeId != null ?
                                             AllStaticAttributes.FirstOrDefault(StaticAttribute => StaticAttribute.Id == DependencySingleGroupSingleRule.StaticAttributeId).Key :
                                             AllDynamicAttributes.FirstOrDefault(DynamicAttribute => DynamicAttribute.Id == DependencySingleGroupSingleRule.DynamicAttributeId).Key)
