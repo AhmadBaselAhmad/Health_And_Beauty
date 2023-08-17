@@ -93,14 +93,15 @@ namespace GraduationProject.Service.Services
 
                 // Get All The Patients in This Clinic For Adding The Default Value OR The Dependency Value To Them..
                 List<PatientViewModel> AllClinicPatients = _Mapper.Map<List<PatientViewModel>>(_DbContext.Appointments
-                    .Include(x => x.Doctor).Include(x => x.Patient)
+                    .Include(x => x.Doctor).Include(x => x.Patient).Include(x => x.Patient.User)
                     .Where(x => x.Doctor.ClinicId == NewDynamicAttribute.ClinicId)
                     .Select(x => x.Patient).ToList());
 
-                List<Medical_Information> MedicalInformationFullData = _DbContext.Medical_Informations
-                    .Where(x => AllClinicPatients.Exists(y => y.UserInformation.Id == x.PatientId)).ToList();
+                List<Medical_Information> MedicalInformationFullData = _DbContext.Medical_Informations.AsEnumerable()
+                    .Where(x => AllClinicPatients.FirstOrDefault(y => y.UserInformation.Id == x.PatientId) != null).ToList();
 
-                List<Medicine> MedicinesFullData = _DbContext.Medicines.Where(x => MedicalInformationFullData
+                List<Medicine> MedicinesFullData = _DbContext.Medicines.AsEnumerable()
+                    .Where(x => MedicalInformationFullData
                     .Exists(y => y.Id == x.MedicalInfoId)).ToList();
 
                 foreach (PatientViewModel Patient in AllClinicPatients)
